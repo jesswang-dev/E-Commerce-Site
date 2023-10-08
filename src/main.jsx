@@ -15,6 +15,13 @@ import Recomended from "./Pages/Recomended";
 import SignUp from "./Pages/SignUp";
 import SignIn from "./Pages/SignIn";
 
+/** Import stylesheets */
+import "./assets/index.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} errorElement={<ErrorPage />}>
