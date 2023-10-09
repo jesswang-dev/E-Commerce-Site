@@ -3,6 +3,7 @@
     margin: 0;
     font-family: "Roboto";
     box-sizing: border-box;
+    color: #1a1a1a;
 }
 
 a {
@@ -11,4 +12,12 @@ a {
 
 li {
     list-style-type: none;
+}
+
+#nav {
+    background-color: #f9f9f9;
+}
+
+#nav a.active_ {
+    font-weight: 600;
 }

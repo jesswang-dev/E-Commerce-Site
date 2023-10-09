@@ -5,33 +5,74 @@ import Featured from "../Pages/Featured";
 import Recomended from "../Pages/Recomended";
 import SignUp from "../Pages/SignUp";
 import SignIn from "../Pages/SignIn";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import { Container } from "@mui/material";
 
 export default function NavBar() {
+
+  function computedClassName({isActive}) {
+    return isActive?'active_':''
+  }
   return (
     <>
-      <div className="home-logo">NavLogo</div>
-      <nav>
-        <NavLink to="/" element={<Home />}>
-          Home
-        </NavLink>
-        <NavLink to="/shop" element={<Shop />}>
-          Shop
-        </NavLink>
-        <NavLink to="/featured" element={<Featured />}>
-          Featured
-        </NavLink>
-        <NavLink to="/recommended" element={<Recomended />}>
-          Recommended
-        </NavLink>
-      </nav>
-      <div className="sign-up-in">
-        <Link to="/signup" element={<SignUp />}>
-          Sign Up
-        </Link>
-        <Link to="/signin" element={<SignIn />}>
-          Sign In
-        </Link>
-      </div>
+      <Container maxWidth={1200}>
+        <Grid container height={100}>
+          <Grid
+            item
+            xs={5}
+            display={"flex"}
+            justifyContent={"space-evenly"}
+            alignItems={"center"}
+          >
+            <NavLink to="/" element={<Home />}>
+              Logo
+            </NavLink>
+            <NavLink to="/" element={<Home />} className={computedClassName}>
+              Home
+            </NavLink>
+            <NavLink
+              to="/shop"
+              element={<Shop />}
+              className={computedClassName}
+            >
+              Shop
+            </NavLink>
+            <NavLink
+              to="/featured"
+              element={<Featured />}
+              className={computedClassName}
+            >
+              Featured
+            </NavLink>
+            <NavLink
+              to="/recommended"
+              element={<Recomended />}
+              className={computedClassName}
+            >
+              Recommended
+            </NavLink>
+          </Grid>
+
+          <Grid item xs={5}></Grid>
+          <Grid
+            item
+            xs={2}
+            display={"flex"}
+            justifyContent={"space-around"}
+            alignItems={"center"}
+          >
+            <div className="sign-up-in">
+              <Link to="/signup" element={<SignUp />}>
+                <Button variant="contained">Sign Up</Button>
+              </Link>
+              <Link to="/signin" element={<SignIn />}>
+                <Button variant="outlined">Sign In</Button>
+              </Link>
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 }
