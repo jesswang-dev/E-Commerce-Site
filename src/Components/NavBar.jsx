@@ -16,7 +16,7 @@ export default function NavBar() {
   }
   return (
     <>
-      <Container maxWidth={1200}>
+      <Container maxWidth={'xl'}>
         <Grid container height={100}>
           <Grid
             item

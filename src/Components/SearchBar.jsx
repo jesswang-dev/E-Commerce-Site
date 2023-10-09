@@ -1,7 +1,7 @@
 export default function SearchBar() {
   return (
     <>
-    <input type="search" />
+    <input type="search" id="mySearch"/>
     </>
   )
 }
