@@ -9,24 +9,25 @@ import SignIn from "../Pages/SignIn";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
+import ShoppingCart from "./ShoppingCart";
 
 export default function NavBar() {
-
-  function computedClassName({isActive}) {
-    return isActive?'active_':''
+  function computedClassName({ isActive }) {
+    return isActive ? "active_" : "";
   }
   return (
     <>
-      <Container maxWidth={'xl'}>
+      <Container maxWidth={"xl"}>
         <Grid container height={100} display={"flex"} alignItems={"center"}>
           <Grid
             item
             xs={5}
             display={"flex"}
             justifyContent={"space-evenly"}
+            alignItems={"center"}
           >
             <NavLink to="/" element={<Home />}>
-              Logo
+              <img src="/logo.png" alt="Logo" height="50" />
             </NavLink>
             <NavLink to="/" element={<Home />} className={computedClassName}>
               Home
@@ -54,16 +55,18 @@ export default function NavBar() {
             </NavLink>
           </Grid>
 
-          <Grid item xs={5}>
-            <SearchBar />
-          </Grid>
-
           <Grid
             item
-            xs={2}
-            // display={"flex"}
-            // justifyContent={"space-around"}
+            xs={5}
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
           >
+            <SearchBar />
+            <ShoppingCart />
+          </Grid>
+
+          <Grid item xs={2}>
             <div className="sign-up-in">
               <Link to="/signup" element={<SignUp />}>
                 <Button variant="contained">Sign Up</Button>

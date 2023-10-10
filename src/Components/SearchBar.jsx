@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import InputAdornment from "@mui/material/InputAdornment";
+import SearchIcon from "@mui/icons-material/Search";
+import { OutlinedInput } from "@mui/material";
 
 export default function SearchBar() {
   const [input, setInput] = useState('');
@@ -31,11 +34,14 @@ export default function SearchBar() {
   return (
     <>
       <form onSubmit={submitHandler}>
-        <input
-          type="search"
-          id="mySearch"
+        <OutlinedInput
+          id="outlined-adornment-amount"
+          startAdornment={
+            <InputAdornment position="start">
+              <SearchIcon />
+            </InputAdornment>
+          }
           placeholder="Search product..."
-          spellCheck="true"
         />
       </form>
     </>
