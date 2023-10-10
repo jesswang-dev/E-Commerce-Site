@@ -1,13 +1,14 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function SearchBar() {
+  const [input, setInput] = useState('');
   const navigate = useNavigate();
 
    const submitHandler = (event) => {
-    //  console.log("form submitted ✅");
-    //  console.log(event.target.value);
-     navigate(`/search/${event.target.value}`);
+     console.log(event.target.value);
+     setInput(event.target.value);
+     navigate(`search/${event.target.value}`);
    };
 
 
@@ -25,7 +26,7 @@ export default function SearchBar() {
     return () => {
       document.removeEventListener("keydown", keyDownHandler);
     };
-  });
+  }, [input]);
 
   return (
     <>
