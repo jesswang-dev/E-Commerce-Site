@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import NavBar from './Components/NavBar';
+import Register from './utilities/Register';
 
 function App() {
 
@@ -11,6 +12,8 @@ function App() {
       <div id="page">
         <Outlet />
       </div>
+
+      <Register />
       
     </>
   );

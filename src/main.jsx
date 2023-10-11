@@ -23,7 +23,8 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 
-import "./index";
+/** Import firebase config file*/
+// import "./service/firebaseConfig.js";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
