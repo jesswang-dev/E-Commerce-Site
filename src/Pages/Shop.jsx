@@ -1,5 +1,9 @@
+import ProductCard from "../Components/ProductCard";
 export default function Shop() {
+
   return (
-    <div>Shop</div>
-  )
+    <>
+      <ProductCard />
+    </>
+  );
 }

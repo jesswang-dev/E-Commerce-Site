@@ -33,7 +33,7 @@ export default function Banner() {
 
   return (
     <div className="banner">
-      <Container maxWidth={"xl"}>
+      <Container sx={{maxWidth:1200}}>
         <Grid container height={300} display={"flex"} justifyContent={"center"} >
           <Grid item xs={6}>
             <div className="text">

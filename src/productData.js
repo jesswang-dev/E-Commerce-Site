@@ -1,6 +1,6 @@
 import { nanoid } from "nanoid";
 
-export const productList = [
+const productList = [
   {
     id: nanoid(),
     availableColors: ["#fcf403", "#45fc03"],
@@ -188,3 +188,5 @@ export const productList = [
     dateAdded: 1692201146614,
   },
 ];
+
+export default productList;

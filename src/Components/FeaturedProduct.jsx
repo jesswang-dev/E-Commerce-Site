@@ -1,37 +1,41 @@
-import { collection, getDocs, getFirestore } from "firebase/firestore";
 import firebaseApp from "../service/firebaseConfig";
-import { useEffect, useState } from "react";
+import { getFirestore, getDocs, collection, query, where } from "firebase/firestore";
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import { CardActionArea } from "@mui/material";
 
-export default function ProductCard() {
-  const db = getFirestore(firebaseApp);
 
-  const [productList, setProduct] = useState([]);
+export default function FeaturedProduct() {
+     const db = getFirestore(firebaseApp);
 
-  const getAllProductData = async () => {
-    const querySnapshot = await getDocs(collection(db, "products"));
-    querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-      const { name, brand, price, image } = doc.data();
-      const productInfo = {
-        id: doc.id,
-        name: name,
-        brand: brand,
-        price: price,
-        image: image,
-      };
-      setProduct((prev) => [...prev, productInfo]);
-    });
-  };
+     const [productList, setProductList] = useState([]);
 
-  useEffect(() => {
-    getAllProductData();
-  }, []);
+     const getFeaturedProdcuts = async () => {
+        const q = query(collection(db, "products"), where("isFeatured", "==", true));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
 
+            const { name, brand, image } = doc.data();
+            const productInfo = {
+              id: doc.id,
+              name: name,
+              brand: brand,
+              image: image,
+            };
+            setProductList((prev) => [...prev, productInfo]);
+        });
+
+     };
+
+
+     useEffect(() => {
+       getFeaturedProdcuts();
+     }, []);
   return (
     <>
       <ul>
@@ -53,12 +57,8 @@ export default function ProductCard() {
                     <Typography variant="body2" color="text.secondary">
                       {item.brand}
                     </Typography>
-                    <Typography variant="body2">{`$${item.price}.00`}</Typography>
                   </CardContent>
                 </CardActionArea>
-                <CardActions>
-                  <Button size="small">Add to Cart</Button>
-                </CardActions>
               </Card>
             </li>
           );
