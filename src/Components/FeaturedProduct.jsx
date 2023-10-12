@@ -38,32 +38,32 @@ export default function FeaturedProduct() {
      }, []);
   return (
     <>
-      <ul>
-        {productList.map((item) => {
-          return (
-            <li key={item.id}>
-              <Card sx={{ maxWidth: 300 }}>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={item.image}
-                    alt={item.name}
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h6" component="div">
-                      {item.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {item.brand}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </li>
-          );
-        })}
-      </ul>
+        <ul>
+          {productList.map((item) => {
+            return (
+              <li key={item.id}>
+                <Card sx={{ maxWidth: 300 }}>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={item.image}
+                      alt={item.name}
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h6" component="div">
+                        {item.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {item.brand}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </li>
+            );
+          })}
+        </ul>
     </>
   );
 }

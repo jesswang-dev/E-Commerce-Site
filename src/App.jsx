@@ -1,7 +1,5 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import FeaturedProduct from "./Components/FeaturedProduct";
-import RecommendedProduct from "./Components/RecommendedProduct";
 
 function App() {
   return (
