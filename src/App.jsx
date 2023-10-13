@@ -1,9 +1,7 @@
-import { Outlet } from 'react-router-dom';
-import NavBar from './Components/NavBar';
-import Register from './utilities/Register';
+import { Outlet } from "react-router-dom";
+import NavBar from "./Components/NavBar";
 
 function App() {
-
   return (
     <>
       <div id="nav">
@@ -12,11 +10,8 @@ function App() {
       <div id="page">
         <Outlet />
       </div>
-
-      <Register />
-      
     </>
   );
 }
 
-export default App
+export default App;

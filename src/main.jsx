@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
@@ -14,7 +13,7 @@ import Featured from "./Pages/Featured";
 import Recomended from "./Pages/Recomended";
 import Result from "./Pages/Result";
 import SignUp from "./Pages/SignUp";
-import SignIn from "./Pages/SignIn";
+import LogIn from "./Pages/LogIn";
 
 /** Import stylesheets */
 import "./assets/index.css";
@@ -35,14 +34,12 @@ const router = createBrowserRouter(
       <Route path="recommended" element={<Recomended />} />
       <Route path="search/:input" element={<Result />} />
       <Route path="signup" element={<SignUp />} />
-      <Route path="signin" element={<SignIn />} />
+      <Route path="login" element={<LogIn />} />
     </Route>
   )
 );
 
 /**The entry point for adding a Router **/
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
 );

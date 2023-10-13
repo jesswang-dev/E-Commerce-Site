@@ -1,51 +1,63 @@
-import { collection, getDocs, getFirestore } from "firebase/firestore";
 import firebaseApp from "../service/firebaseConfig";
-import { useEffect, useState } from "react";
+import {
+  getFirestore,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions, Grid, Container} from "@mui/material";
+import { CardActionArea, Grid, Container} from "@mui/material";
 
-export default function ProductCard() {
+export default function RecommendedProduct() {
   const db = getFirestore(firebaseApp);
 
-  const [productList, setProduct] = useState([]);
+  const [productList, setProductList] = useState([]);
 
-  const getAllProductData = async () => {
-    const querySnapshot = await getDocs(collection(db, "products"));
+  const getRecommendedProdcuts = async () => {
+    const q = query(
+      collection(db, "products"),
+      where("isRecommended", "==", true)
+    );
+    const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-      console.log(`${doc.id} => ${doc.data()}`);
-      const { name, brand, price, image } = doc.data();
+      // doc.data() is never undefined for query doc snapshots
+    //   console.log(doc.id, " => ", doc.data());
+
+      const { name, brand, image } = doc.data();
       const productInfo = {
         id: doc.id,
         name: name,
         brand: brand,
-        price: price,
         image: image,
       };
-      setProduct((prev) => [...prev, productInfo]);
+      setProductList((prev) => [...prev, productInfo]);
     });
   };
 
   useEffect(() => {
-    getAllProductData();
+    getRecommendedProdcuts();
   }, []);
 
+  console.log('recommended', productList);
   return (
     <>
       <Container>
         <Grid sx={{ maxWidth: 1200 }} container spacing={2}>
           <Grid item xs={12}>
-            <Grid container justifyContent="center" spacing={2}>
+            <Grid container justifyContent="flex start" spacing={2}>
               {productList.map((item) => {
                 return (
-                  <Grid key={item.id} item>
-                    <Card sx={{ maxWidth: 200 }}>
+                  <li key={item.id}>
+                    <Card sx={{ maxWidth: 300 }}>
                       <CardActionArea>
                         <CardMedia
                           component="img"
-                          height="100"
+                          height="140"
                           image={item.image}
                           alt={item.name}
                         />
@@ -56,14 +68,10 @@ export default function ProductCard() {
                           <Typography variant="body2" color="text.secondary">
                             {item.brand}
                           </Typography>
-                          <Typography variant="body2">{`$${item.price}.00`}</Typography>
                         </CardContent>
                       </CardActionArea>
-                      <CardActions>
-                        <Button size="small">Add to Cart</Button>
-                      </CardActions>
                     </Card>
-                  </Grid>
+                  </li>
                 );
               })}
             </Grid>

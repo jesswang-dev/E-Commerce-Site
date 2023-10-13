@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Container } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
@@ -33,7 +33,7 @@ export default function Banner() {
 
   return (
     <div className="banner">
-      <Container maxWidth={1200}>
+      <Container sx={{maxWidth:1200}}>
         <Grid container height={300} display={"flex"} justifyContent={"center"} >
           <Grid item xs={6}>
             <div className="text">
@@ -43,7 +43,7 @@ export default function Banner() {
                 money in your pocket. Glasses, sunglasses, and contacts—we’ve
                 got your eyes covered.
               </p>
-              <button style={{ visibility: style }}>Shop now</button>
+              <Link to="/shop"><button style={{ visibility: style }}>Shop now</button></Link>
             </div>
           </Grid>
 

@@ -5,7 +5,7 @@ import Featured from "../Pages/Featured";
 import Recomended from "../Pages/Recomended";
 import SearchBar from "./SearchBar";
 import SignUp from "../Pages/SignUp";
-import SignIn from "../Pages/SignIn";
+import LogIn from "../Pages/LogIn";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
@@ -71,8 +71,8 @@ export default function NavBar() {
               <Link to="/signup" element={<SignUp />}>
                 <Button variant="contained">Sign Up</Button>
               </Link>
-              <Link to="/signin" element={<SignIn />}>
-                <Button variant="outlined">Sign In</Button>
+              <Link to="/login" element={<LogIn />}>
+                <Button variant="outlined">Log In</Button>
               </Link>
             </div>
           </Grid>
