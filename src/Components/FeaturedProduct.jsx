@@ -1,50 +1,65 @@
 import firebaseApp from "../service/firebaseConfig";
-import { getFirestore, getDocs, collection, query, where } from "firebase/firestore";
+import {
+  getFirestore,
+  getDocs,
+  collection,
+  query,
+  where,
+} from "firebase/firestore";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Grid, Container } from "@mui/material";
 
-
 export default function FeaturedProduct() {
-     const db = getFirestore(firebaseApp);
+  const db = getFirestore(firebaseApp);
 
-     const [productList, setProductList] = useState([]);
+  const [productList, setProductList] = useState([]);
 
-     const getFeaturedProdcuts = async () => {
-        const q = query(collection(db, "products"), where("isFeatured", "==", true));
-        const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-            // doc.data() is never undefined for query doc snapshots
-            console.log(doc.id, " => ", doc.data());
+  const getFeaturedProdcuts = async () => {
+    const q = query(
+      collection(db, "products"),
+      where("isFeatured", "==", true)
+    );
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      console.log(doc.id, " => ", doc.data());
 
-            const { name, brand, image } = doc.data();
-            const productInfo = {
-              id: doc.id,
-              name: name,
-              brand: brand,
-              image: image,
-            };
-            setProductList((prev) => [...prev, productInfo]);
-        });
+      const { name, brand, image } = doc.data();
+      const productInfo = {
+        id: doc.id,
+        name: name,
+        brand: brand,
+        image: image,
+      };
+      setProductList((prev) => [...prev, productInfo]);
+    });
+  };
 
-     };
+  useEffect(() => {
+    getFeaturedProdcuts();
+  }, []);
 
+  const navigate = useNavigate();
 
-     useEffect(() => {
-       getFeaturedProdcuts();
-     }, []);
+  const navigateToDetails = (i) => {
+    const productId = productList[i].id;
+    navigate(`/product/${productId}`);
+  };
+
   return (
     <>
       <Container>
         <Grid sx={{ maxWidth: 1200 }} container spacing={2}>
           <Grid item xs={12}>
             <Grid container justifyContent="flex start" spacing={2}>
-              {productList.map((item) => {
+              {productList.map((item, index) => {
                 return (
-                  <li key={item.id}>
+                  <li key={item.id} onClick={() => navigateToDetails(index)}>
                     <Card sx={{ maxWidth: 300 }}>
                       <CardActionArea>
                         <CardMedia

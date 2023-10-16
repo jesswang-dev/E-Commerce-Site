@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { getDoc, getFirestore, doc } from "firebase/firestore";
 import firebaseApp from "../service/firebaseConfig";
 import { useParams } from "react-router-dom";
+import { Container, Grid } from "@mui/material";
 
 export default function ProductDetails() {
   const db = getFirestore(firebaseApp);
@@ -58,35 +59,72 @@ export default function ProductDetails() {
 
   return (
     <>
-      <div>{`ProductId${productId}`} </div>
-      <ul className="gallery">
-        {imageList.map((image, index) => {
-          return(<li key={index}><img src={image.url}></img></li>)
-        })}
-      </ul>
-      <div className="product">
-        <img src={detail.imageUrl} alt={detail.name} />
-      </div>
-      <div className="details" >
-        <p className="brand">{detail.brand}</p>
-        <p className="name">{detail.name}</p>
-        <p className="description">{detail.description}</p>
+      <Container>
+        <Grid container sx={{ maxWidth: 1200 }}>
+          <Grid item xs={1}>
+            <ul
+              className="gallery"
+              style={{ width: 100, height: 450, border: "1px solid gray" }}
+            >
+              {imageList.map((image) => {
+                return (
+                  <li
+                    key={image.id}
+                    style={{
+                      width: 100,
+                      height: 100,
+                      border: "1px solid gray",
+                    }}
+                  >
+                    <img
+                      src={image.url}
+                      alt={image.id}
+                      style={{
+                        width: "100px",
+                        height: "100px",
+                        objectFit: "contain",
+                      }}
+                    />
+                  </li>
+                );
+              })}
+            </ul>
+          </Grid>
 
-        <select className="size" placeholder="select the size">
-          {sizeList.map((size, index) => {
-            return (<option key={index} value={size}>{size}</option>)
-          })}
-        </select>
+          <Grid item xs={5}>
+            <div className="product">
+              <img src={detail.imageUrl} alt={detail.name} />
+            </div>
+          </Grid>
 
-        <ul className="color">
-          {colorList.map((color, index) => {
-            return <li key={index}>{color}</li>;
-          })}
-        </ul>
+          <Grid item xs={6}>
+            <div className="details">
+              <p className="brand">{detail.brand}</p>
+              <p className="name">{detail.name}</p>
+              <p className="description">{detail.description}</p>
 
-        <p className="price">{detail.price}</p>
-        <button>Add to Cart</button>
-      </div>
+              <select className="size" placeholder="select the size">
+                {sizeList.map((size, index) => {
+                  return (
+                    <option key={index} value={size}>
+                      {size}
+                    </option>
+                  );
+                })}
+              </select>
+
+              <ul className="color">
+                {colorList.map((color, index) => {
+                  return <li key={index}>{color}</li>;
+                })}
+              </ul>
+
+              <p className="price">{detail.price}</p>
+              <button>Add to Cart</button>
+            </div>
+          </Grid>
+        </Grid>
+      </Container>
     </>
   );
 }
