@@ -14,6 +14,7 @@ import Recomended from "./Pages/Recomended";
 import Result from "./Pages/Result";
 import SignUp from "./Pages/SignUp";
 import LogIn from "./Pages/LogIn";
+import ProductDetails from "./Components/ProductDetails";
 
 /** Import stylesheets */
 import "./assets/index.css";
@@ -35,6 +36,7 @@ const router = createBrowserRouter(
       <Route path="search/:input" element={<Result />} />
       <Route path="signup" element={<SignUp />} />
       <Route path="login" element={<LogIn />} />
+      <Route path="product/:productId" element={<ProductDetails />} />
     </Route>
   )
 );
