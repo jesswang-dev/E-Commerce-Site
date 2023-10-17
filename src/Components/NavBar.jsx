@@ -9,7 +9,7 @@ import LogIn from "../Pages/LogIn";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
-import ShoppingCart from "./ShoppingCart";
+import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 
 export default function NavBar() {
   function computedClassName({ isActive }) {
@@ -63,7 +63,7 @@ export default function NavBar() {
             alignItems={"center"}
           >
             <SearchBar />
-            <ShoppingCart />
+            <ShoppingBagOutlinedIcon sx={{ fontSize: 30 }} />
           </Grid>
 
           <Grid item xs={2}>
