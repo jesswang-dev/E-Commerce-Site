@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getDoc, getFirestore, doc } from "firebase/firestore";
 import firebaseApp from "../service/firebaseConfig";
 import { useParams } from "react-router-dom";
 import { Container, Grid } from "@mui/material";
-
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, addToExisted } from "../store/cart";
 export default function ProductDetails() {
   const db = getFirestore(firebaseApp);
   const params = useParams();
@@ -13,7 +14,6 @@ export default function ProductDetails() {
   const [sizeList, setSizeList] = useState([]);
   const [colorList, setColorList] = useState([]);
   const [imageList, setImageList] = useState([]);
-  
 
   const getProductById = async (id) => {
     const docRef = doc(db, "products", id);
@@ -46,7 +46,6 @@ export default function ProductDetails() {
       setSizeList((prev) => [...prev, ...sizes]);
       setColorList((prev) => [...prev, ...availableColors]);
       setImageList((prev) => [...prev, ...imageCollection]);
-
     } else {
       // docSnap.data() will be undefined in this case
       console.log("No such document!");
@@ -56,6 +55,58 @@ export default function ProductDetails() {
   useEffect(() => {
     getProductById(productId);
   }, []);
+
+  const sizeRef = useRef();
+  const colorRef = useRef();
+
+  const getSelectedSize = () => {
+    return sizeRef.current.value;
+  };
+
+  const getSelectedColor = () => {
+    return colorRef.current.value;
+  };
+
+  const dispatch = useDispatch();
+  const itemList = useSelector((state) => state.cart.itemList);
+
+  const addItemToCart = () => {
+    const newItemSize = getSelectedSize();
+    const newItemColor = getSelectedColor();
+    //if the item is already in the cart, instead of adding a new item add quantity only
+    const newItemId = detail.id;
+    let hasSameItem = false;
+    let index;
+    for (let i = 0; i < itemList.length; i++) {
+      const item = itemList[i];
+      if (
+        item.id === newItemId &&
+        item.size === newItemSize &&
+        item.color === newItemColor
+      ) {
+        hasSameItem = true;
+        index = i;
+      }
+    }
+
+    const newItem = {
+        id: newItemId,
+        name: detail.name,
+        price: detail.price,
+        url: detail.imageUrl,
+        quantity: 1,
+        size: newItemSize,
+        color: newItemColor,
+      };
+
+    if (hasSameItem) {
+      const item = [index, newItem];
+      dispatch(addToExisted(item));
+
+    } else {
+      dispatch(addToCart(newItem));
+    }
+  };
 
   return (
     <>
@@ -103,11 +154,11 @@ export default function ProductDetails() {
               <p className="name">{detail.name}</p>
               <p className="description">{detail.description}</p>
 
-              <select className="size" placeholder="select the size">
+              <select ref={sizeRef}>
                 {sizeList.map((size, index) => {
                   return (
                     <option key={index} value={size}>
-                      {size}
+                      {`${size} mm`}
                     </option>
                   );
                 })}
@@ -115,12 +166,33 @@ export default function ProductDetails() {
 
               <ul className="color">
                 {colorList.map((color, index) => {
-                  return <li key={index}>{color}</li>;
+                  return (
+                    <li key={index}>
+                      <input
+                        type="radio"
+                        id={`color${index}`}
+                        name="color"
+                        value={color}
+                        ref={colorRef}
+                      />
+                      <label
+                        htmlFor={`color${index}`}
+                        style={{
+                          color: `#fff`,
+                          height: 50,
+                          width: 100,
+                          backgroundColor: `${color}`,
+                        }}
+                      >
+                        {color}
+                      </label>
+                    </li>
+                  );
                 })}
               </ul>
 
               <p className="price">{detail.price}</p>
-              <button>Add to Cart</button>
+              <button onClick={addItemToCart}>Add to Cart</button>
             </div>
           </Grid>
         </Grid>

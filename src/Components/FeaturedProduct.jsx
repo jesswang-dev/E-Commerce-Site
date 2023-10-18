@@ -59,7 +59,7 @@ export default function FeaturedProduct() {
             <Grid container justifyContent="flex start" spacing={2}>
               {productList.map((item, index) => {
                 return (
-                  <li key={item.id} onClick={() => navigateToDetails(index)}>
+                  <li key={`product${item.id}`} onClick={() => navigateToDetails(index)}>
                     <Card sx={{ maxWidth: 300 }}>
                       <CardActionArea>
                         <CardMedia
