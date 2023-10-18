@@ -14,6 +14,7 @@ export default function ProductDetails() {
   const [sizeList, setSizeList] = useState([]);
   const [colorList, setColorList] = useState([]);
   const [imageList, setImageList] = useState([]);
+  const [selectedColor, setSelectedColor] = useState('');
 
   const getProductById = async (id) => {
     const docRef = doc(db, "products", id);
@@ -57,52 +58,47 @@ export default function ProductDetails() {
   }, []);
 
   const sizeRef = useRef();
-  const colorRef = useRef();
+  // const colorRef = useRef();
 
   const getSelectedSize = () => {
     return sizeRef.current.value;
   };
 
-  const getSelectedColor = () => {
-    return colorRef.current.value;
+  const handleSelectedColor = (e) => {
+    setSelectedColor(e.target.value);
   };
 
   const dispatch = useDispatch();
   const itemList = useSelector((state) => state.cart.itemList);
 
   const addItemToCart = () => {
-    const newItemSize = getSelectedSize();
-    const newItemColor = getSelectedColor();
     //if the item is already in the cart, instead of adding a new item add quantity only
-    const newItemId = detail.id;
     let hasSameItem = false;
-    let index;
+    // let index;
+
+    const newItem = {
+      id: detail.id,
+      name: detail.name,
+      price: detail.price,
+      url: detail.imageUrl,
+      size: getSelectedSize(),
+      color: selectedColor,
+    };
+    
     for (let i = 0; i < itemList.length; i++) {
       const item = itemList[i];
       if (
-        item.id === newItemId &&
-        item.size === newItemSize &&
-        item.color === newItemColor
+        item.id === newItem.id &&
+        item.size === newItem.size &&
+        item.color === newItem.color
       ) {
         hasSameItem = true;
-        index = i;
+        break;
       }
     }
 
-    const newItem = {
-        id: newItemId,
-        name: detail.name,
-        price: detail.price,
-        url: detail.imageUrl,
-        quantity: 1,
-        size: newItemSize,
-        color: newItemColor,
-      };
-
     if (hasSameItem) {
-      const item = [index, newItem];
-      dispatch(addToExisted(item));
-
+      dispatch(addToExisted(newItem));
     } else {
       dispatch(addToCart(newItem));
     }
@@ -167,13 +163,14 @@ export default function ProductDetails() {
               <ul className="color">
                 {colorList.map((color, index) => {
                   return (
-                    <li key={index}>
+                    <li key={`color${index}-${color}`}>
                       <input
                         type="radio"
                         id={`color${index}`}
                         name="color"
                         value={color}
-                        ref={colorRef}
+                        onChange={handleSelectedColor}
+                        // ref={colorRef}
                       />
                       <label
                         htmlFor={`color${index}`}

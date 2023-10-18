@@ -22,9 +22,10 @@ export default function ShoppingCart() {
         </div>
 
         <div className="cartItems" style={{ width: 500, height: 250 }}>
-          {itemList.map((item) => {
+          {itemList.map((item, index) => {
+            
             return (
-            <CartItem key={item.id} item={item}/>
+            <CartItem key={`${item.id}${item.color}${item.size}`} item={item} index={index}/>
             )
           })}
         </div>
