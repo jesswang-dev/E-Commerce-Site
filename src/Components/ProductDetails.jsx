@@ -1,8 +1,9 @@
 import { useEffect, useState, useRef } from "react";
 import { getDoc, getFirestore, doc } from "firebase/firestore";
 import firebaseApp from "../service/firebaseConfig";
-import { useParams } from "react-router-dom";
-import { Container, Grid } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import { Box, Card, CardContent, Container, Grid, Typography } from "@mui/material";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToExisted } from "../store/cart";
 export default function ProductDetails() {
@@ -14,7 +15,7 @@ export default function ProductDetails() {
   const [sizeList, setSizeList] = useState([]);
   const [colorList, setColorList] = useState([]);
   const [imageList, setImageList] = useState([]);
-  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedColor, setSelectedColor] = useState("");
 
   const getProductById = async (id) => {
     const docRef = doc(db, "products", id);
@@ -74,7 +75,6 @@ export default function ProductDetails() {
   const addItemToCart = () => {
     //if the item is already in the cart, instead of adding a new item add quantity only
     let hasSameItem = false;
-    // let index;
 
     const newItem = {
       id: detail.id,
@@ -84,7 +84,7 @@ export default function ProductDetails() {
       size: getSelectedSize(),
       color: selectedColor,
     };
-    
+
     for (let i = 0; i < itemList.length; i++) {
       const item = itemList[i];
       if (
@@ -107,11 +107,27 @@ export default function ProductDetails() {
   return (
     <>
       <Container>
-        <Grid container sx={{ maxWidth: 1200 }}>
-          <Grid item xs={1}>
+        <Link to={"/shop"}>
+          <ArrowBackIcon />
+          Back to Shop
+        </Link>
+        <Grid
+          container
+          sx={{
+            maxWidth: 1100,
+            height: 500,
+            border: "1px solid #f9f9f9",
+          }}
+          spacing={3}
+        >
+          <Grid item xs={2} sx={{ display: "flex", direction: "column" }}>
             <ul
               className="gallery"
-              style={{ width: 100, height: 450, border: "1px solid gray" }}
+              style={{
+                width: 100,
+                height: "100%",
+                border: "1px solid #f9f9f9",
+              }}
             >
               {imageList.map((image) => {
                 return (
@@ -120,7 +136,7 @@ export default function ProductDetails() {
                     style={{
                       width: 100,
                       height: 100,
-                      border: "1px solid gray",
+                      border: "1px solid #f9f9f9",
                     }}
                   >
                     <img
@@ -138,59 +154,78 @@ export default function ProductDetails() {
             </ul>
           </Grid>
 
-          <Grid item xs={5}>
-            <div className="product">
-              <img src={detail.imageUrl} alt={detail.name} />
-            </div>
+          <Grid item xs={4}>
+            <Card
+              sx={{
+                maxWidth: "100%",
+                height: "100%",
+                backgroundColor: "#f9f9f9",
+              }}
+            >
+              <div className="product">
+                <img
+                  src={detail.imageUrl}
+                  alt={detail.name}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              </div>
+            </Card>
           </Grid>
 
           <Grid item xs={6}>
-            <div className="details">
-              <p className="brand">{detail.brand}</p>
-              <p className="name">{detail.name}</p>
-              <p className="description">{detail.description}</p>
+            <Card sx={{ maxWidth: 700, height: "100%" }}>
+              <Box mt={3}>
+                <CardContent>
+                  <Typography variant="body2" color="text.secondary">
+                    {detail.brand}
+                  </Typography>
+                  <Typography variant="h5">{detail.name}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {detail.description}
+                  </Typography>
+                </CardContent>
+                <select ref={sizeRef}>
+                  {sizeList.map((size, index) => {
+                    return (
+                      <option key={index} value={size}>
+                        {`${size} mm`}
+                      </option>
+                    );
+                  })}
+                </select>
 
-              <select ref={sizeRef}>
-                {sizeList.map((size, index) => {
-                  return (
-                    <option key={index} value={size}>
-                      {`${size} mm`}
-                    </option>
-                  );
-                })}
-              </select>
+                <ul className="color">
+                  {colorList.map((color, index) => {
+                    return (
+                      <li key={`color${index}-${color}`}>
+                        <input
+                          type="radio"
+                          id={`color${index}`}
+                          name="color"
+                          value={color}
+                          onChange={handleSelectedColor}
+                          // ref={colorRef}
+                        />
+                        <label
+                          htmlFor={`color${index}`}
+                          style={{
+                            color: `#fff`,
+                            height: 50,
+                            width: 100,
+                            backgroundColor: `${color}`,
+                          }}
+                        >
+                          {color}
+                        </label>
+                      </li>
+                    );
+                  })}
+                </ul>
 
-              <ul className="color">
-                {colorList.map((color, index) => {
-                  return (
-                    <li key={`color${index}-${color}`}>
-                      <input
-                        type="radio"
-                        id={`color${index}`}
-                        name="color"
-                        value={color}
-                        onChange={handleSelectedColor}
-                        // ref={colorRef}
-                      />
-                      <label
-                        htmlFor={`color${index}`}
-                        style={{
-                          color: `#fff`,
-                          height: 50,
-                          width: 100,
-                          backgroundColor: `${color}`,
-                        }}
-                      >
-                        {color}
-                      </label>
-                    </li>
-                  );
-                })}
-              </ul>
-
-              <p className="price">{detail.price}</p>
-              <button onClick={addItemToCart}>Add to Cart</button>
-            </div>
+                <p className="price">{detail.price}</p>
+                <button onClick={addItemToCart}>Add to Cart</button>
+              </Box>
+            </Card>
           </Grid>
         </Grid>
       </Container>

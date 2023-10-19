@@ -30,13 +30,13 @@ export default function NavBar() {
   return (
     <>
       <Container maxWidth={"xl"}>
-        <Grid container height={100} display={"flex"} alignItems={"center"}>
+        <Grid container height={100} alignItems="center">
           <Grid
             item
             xs={5}
-            display={"flex"}
-            justifyContent={"space-evenly"}
-            alignItems={"center"}
+            display="flex"
+            justifyContent="space-evenly"
+            alignItems="center"
           >
             <NavLink to="/" element={<Home />}>
               <img src="/logo.png" alt="Logo" height="50" />
@@ -70,9 +70,9 @@ export default function NavBar() {
           <Grid
             item
             xs={5}
-            display={"flex"}
-            justifyContent={"center"}
-            alignItems={"center"}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
           >
             <SearchBar />
             <div
