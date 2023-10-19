@@ -1,23 +1,65 @@
- * {
-    padding: 0;
-    margin: 0;
-    font-family: "Roboto";
-    box-sizing: border-box;
-    color: #1a1a1a;
+* {
+  padding: 0;
+  margin: 0;
+  font-family: "Roboto";
+  box-sizing: border-box;
+  color: #1a1a1a;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 li {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 #nav {
-    background-color: #f9f9f9;
+  background-color: #f9f9f9;
 }
 
 #nav a.active_ {
-    font-weight: 600;
+  font-weight: 600;
+}
+
+#cart.inactive {
+  position: fixed;
+  top: 0;
+  right: -40vw;
+  width: 40vw;
+  height: 100vh;
+}
+
+#cart.active {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 40vw;
+  height: 100vh;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  z-index: 99;
+}
+
+#cart .MuiContainer-root {
+  height: 100%;
+  display: grid;
+  grid-template-rows: 100px auto 100px;
+}
+.cartHeader {
+  grid-row: 1 / 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cartItems {
+  grid-row: 2 / 3;
+}
+
+.cartSummary {
+  grid-row: 3 / 4;
+  border-top: 1px solid gray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }

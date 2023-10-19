@@ -6,6 +6,7 @@ const initialState = {
   itemSubtotal: {},
   amount: 0,
   subtotal: 0,
+  cartDisplay: false,
 };
 
 export const cartSlice = createSlice({
@@ -32,7 +33,6 @@ export const cartSlice = createSlice({
         ...state.itemSubtotal,
         [key]: state.itemSubtotal[key] + price,
       };
-      state.amount += 1;
       state.subtotal += price;
     },
     incrementItem: (state, action) => {
@@ -45,7 +45,6 @@ export const cartSlice = createSlice({
         ...state.itemSubtotal,
         [key]: state.itemSubtotal[key] + price,
       };
-      state.amount += 1;
       state.subtotal += price;
     },
     decrementItem: (state, action) => {
@@ -58,14 +57,13 @@ export const cartSlice = createSlice({
         ...state.itemSubtotal,
         [key]: state.itemSubtotal[key] - price,
       };
-      state.amount -= 1;
       state.subtotal -= price;
     },
     deleteItem: (state, action) => {
         const { key, index } = action.payload;
-        console.log(`in deleteItem`, index);
+        // console.log(`in deleteItem`, index);
         state.itemList = [...state.itemList.filter((item, i) => i !== index)];
-        state.amount -= state.itemQuantity[key];
+        state.amount -= 1;
         state.subtotal -= state.itemSubtotal[key];
         state.itemQuantity = {
           ...state.itemQuantity,
@@ -77,8 +75,15 @@ export const cartSlice = createSlice({
         };
 
     },
-    emptyCart: () => {
-      return initialState;
+    displayCart: (state, action) => {
+        state.cartDisplay = action.payload;
+    },
+    emptyCart: (state) => {
+        state.itemList = [];
+        state.itemQuantity = {};
+        state.itemSubtotal = {};
+        state.amount = 0;
+        state.subtotal = 0;
     },
   },
 });
@@ -89,6 +94,7 @@ export const {
   incrementItem,
   decrementItem,
   deleteItem,
+  displayCart,
   emptyCart,
 } = cartSlice.actions;
 

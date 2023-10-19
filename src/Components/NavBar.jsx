@@ -10,11 +10,23 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
+import Badge from "@mui/material/Badge";
+import { displayCart } from "../store/cart";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function NavBar() {
-  function computedClassName({ isActive }) {
+  const computedClassName = ({ isActive }) => {
     return isActive ? "active_" : "";
-  }
+  };
+
+  const dispatch = useDispatch();
+
+  const displayShoppingCart = () => {
+    dispatch(displayCart(true));
+  };
+
+  const itemAmount = useSelector((state) => state.cart.amount);
+
   return (
     <>
       <Container maxWidth={"xl"}>
@@ -63,7 +75,15 @@ export default function NavBar() {
             alignItems={"center"}
           >
             <SearchBar />
-            <ShoppingBagOutlinedIcon sx={{ fontSize: 30 }} />
+            <div
+              className="cart-btn"
+              style={{ cursor: "pointer" }}
+              onClick={displayShoppingCart}
+            >
+              <Badge color="warning" badgeContent={itemAmount} max={99}>
+                <ShoppingBagOutlinedIcon sx={{ fontSize: 28 }} />
+              </Badge>
+            </div>
           </Grid>
 
           <Grid item xs={2}>
