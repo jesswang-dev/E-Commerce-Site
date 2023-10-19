@@ -41,7 +41,6 @@ export default function SignupForm() {
         email: email,
         password: password,
         id: res.user.uid,
-        shoppingBag: [],
       };
       console.log("userObj", userObj);
 

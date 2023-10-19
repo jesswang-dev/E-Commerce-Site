@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./Components/NavBar";
-import ShoppingCart from "./Components/ShoppingCart.jsx";
+import UserAccount from "./Components/UserAccount";
+import ShoppingCart from "./Components/ShoppingCart";
 
 function App() {
   return (
@@ -11,8 +12,9 @@ function App() {
       <div id="page">
         <Outlet />
       </div>
-
       <ShoppingCart />
+
+      {/* <UserAccount /> */}
     </>
   );
 }

@@ -1,13 +1,12 @@
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Home from "../Pages/Home";
 import Shop from "../Pages/Shop";
 import Featured from "../Pages/Featured";
 import Recomended from "../Pages/Recomended";
 import SearchBar from "./SearchBar";
-import SignUp from "../Pages/SignUp";
-import LogIn from "../Pages/LogIn";
+import AccountButtons from "./AccountButtons";
+
 import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import { Container } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import Badge from "@mui/material/Badge";
@@ -18,7 +17,7 @@ export default function NavBar() {
   const computedClassName = ({ isActive }) => {
     return isActive ? "active_" : "";
   };
-
+  
   const dispatch = useDispatch();
 
   const displayShoppingCart = () => {
@@ -88,12 +87,7 @@ export default function NavBar() {
 
           <Grid item xs={2}>
             <div className="sign-up-in">
-              <Link to="/signup" element={<SignUp />}>
-                <Button variant="contained">Sign Up</Button>
-              </Link>
-              <Link to="/login" element={<LogIn />}>
-                <Button variant="outlined">Log In</Button>
-              </Link>
+              <AccountButtons />
             </div>
           </Grid>
         </Grid>

@@ -1,11 +1,29 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { getDoc, getFirestore, doc } from "firebase/firestore";
 import firebaseApp from "../service/firebaseConfig";
 import { Link, useParams } from "react-router-dom";
-import { Box, Card, CardContent, Container, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  Card,
+  CardContent,
+  Container,
+  Divider,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Typography,
+  Select,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Button,
+  Radio,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToExisted } from "../store/cart";
+
 export default function ProductDetails() {
   const db = getFirestore(firebaseApp);
   const params = useParams();
@@ -15,7 +33,8 @@ export default function ProductDetails() {
   const [sizeList, setSizeList] = useState([]);
   const [colorList, setColorList] = useState([]);
   const [imageList, setImageList] = useState([]);
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedColor, setSelectedColor] = useState(colorList[0]);
+  const [selectedSize, setSelectedSize] = useState(sizeList[0]);
 
   const getProductById = async (id) => {
     const docRef = doc(db, "products", id);
@@ -58,11 +77,8 @@ export default function ProductDetails() {
     getProductById(productId);
   }, []);
 
-  const sizeRef = useRef();
-  // const colorRef = useRef();
-
-  const getSelectedSize = () => {
-    return sizeRef.current.value;
+  const handleSelectedSize = (e) => {
+    setSelectedSize(e.target.value);
   };
 
   const handleSelectedColor = (e) => {
@@ -81,7 +97,7 @@ export default function ProductDetails() {
       name: detail.name,
       price: detail.price,
       url: detail.imageUrl,
-      size: getSelectedSize(),
+      size: selectedSize,
       color: selectedColor,
     };
 
@@ -132,7 +148,7 @@ export default function ProductDetails() {
               {imageList.map((image) => {
                 return (
                   <li
-                    key={image.id}
+                    key={`image${image.id}`}
                     style={{
                       width: 100,
                       height: 100,
@@ -183,47 +199,83 @@ export default function ProductDetails() {
                   <Typography variant="body2" color="text.secondary">
                     {detail.description}
                   </Typography>
+
+                  <Divider />
+                  <Typography
+                    sx={{ mt: 1 }}
+                    variant="subtitle1"
+                    color="text.secondary"
+                  >
+                    Frame Size
+                  </Typography>
+                  <FormControl sx={{ mt: 1 }} fullWidth>
+                    <InputLabel id="select-size-label">
+                      {" "}
+                      Select Size{" "}
+                    </InputLabel>
+                    <Select
+                      labelId="select-size-label"
+                      id="select-size"
+                      label="Lens Size"
+                      defaultValue={selectedSize}
+                      onChange={handleSelectedSize}
+                    >
+                      {sizeList.map((size, index) => {
+                        return (
+                          <MenuItem key={`size${index}${size}`} value={size}>
+                            {`${size} mm`}
+                          </MenuItem>
+                        );
+                      })}
+                    </Select>
+                  </FormControl>
+
+                  {/* <Typography variant="subtitle1" color="text.secondary">
+                    Color
+                  </Typography> */}
+
+                  <FormControl sx={{ mt: 2, minWidth: 150 }}>
+                    <FormLabel id="radio-buttons-group-label">Color</FormLabel>
+
+                    <RadioGroup
+                      row
+                      aria-labelledby="radio-buttons-group-label"
+                      name="radio-buttons-group"
+                      defaultValue={selectedColor}
+                      onChange={handleSelectedColor}
+                    >
+                      <ul>
+                        {colorList.map((color, index) => {
+                          return (
+                            <>
+                              <li key={`color${index}${color}`}>
+                                <FormControlLabel
+                                  value={color}
+                                  control={<Radio />}
+                                  label={color}
+                                ></FormControlLabel>
+                                <div
+                                  className="colorBox"
+                                  style={{
+                                    color: `#fff`,
+                                    height: 50,
+                                    width: 50,
+                                    backgroundColor: `${color}`,
+                                  }}
+                                ></div>
+                              </li>
+                            </>
+                          );
+                        })}
+                      </ul>
+                    </RadioGroup>
+                  </FormControl>
+
+                  <Typography variant="h5">{`$${detail.price}.00`}</Typography>
+                  <Button variant={"contained"} onClick={addItemToCart}>
+                    Add to Cart
+                  </Button>
                 </CardContent>
-                <select ref={sizeRef}>
-                  {sizeList.map((size, index) => {
-                    return (
-                      <option key={index} value={size}>
-                        {`${size} mm`}
-                      </option>
-                    );
-                  })}
-                </select>
-
-                <ul className="color">
-                  {colorList.map((color, index) => {
-                    return (
-                      <li key={`color${index}-${color}`}>
-                        <input
-                          type="radio"
-                          id={`color${index}`}
-                          name="color"
-                          value={color}
-                          onChange={handleSelectedColor}
-                          // ref={colorRef}
-                        />
-                        <label
-                          htmlFor={`color${index}`}
-                          style={{
-                            color: `#fff`,
-                            height: 50,
-                            width: 100,
-                            backgroundColor: `${color}`,
-                          }}
-                        >
-                          {color}
-                        </label>
-                      </li>
-                    );
-                  })}
-                </ul>
-
-                <p className="price">{detail.price}</p>
-                <button onClick={addItemToCart}>Add to Cart</button>
               </Box>
             </Card>
           </Grid>
