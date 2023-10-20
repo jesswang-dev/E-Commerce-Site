@@ -33,8 +33,11 @@ export default function ProductDetails() {
   const [sizeList, setSizeList] = useState([]);
   const [colorList, setColorList] = useState([]);
   const [imageList, setImageList] = useState([]);
-  const [selectedColor, setSelectedColor] = useState(colorList[0]);
-  const [selectedSize, setSelectedSize] = useState(sizeList[0]);
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedSize, setSelectedSize] = useState("");
+
+  const [colorErr, setColorErr] = useState(false);
+  const [sizeErr, setSizeErr] = useState(false);
 
   const getProductById = async (id) => {
     const docRef = doc(db, "products", id);
@@ -79,44 +82,66 @@ export default function ProductDetails() {
 
   const handleSelectedSize = (e) => {
     setSelectedSize(e.target.value);
+    setSizeErr(false);
   };
 
   const handleSelectedColor = (e) => {
     setSelectedColor(e.target.value);
+    setColorErr(false);
   };
 
   const dispatch = useDispatch();
   const itemList = useSelector((state) => state.cart.itemList);
 
   const addItemToCart = () => {
-    //if the item is already in the cart, instead of adding a new item add quantity only
-    let hasSameItem = false;
-
-    const newItem = {
-      id: detail.id,
-      name: detail.name,
-      price: detail.price,
-      url: detail.imageUrl,
-      size: selectedSize,
-      color: selectedColor,
-    };
-
-    for (let i = 0; i < itemList.length; i++) {
-      const item = itemList[i];
-      if (
-        item.id === newItem.id &&
-        item.size === newItem.size &&
-        item.color === newItem.color
-      ) {
-        hasSameItem = true;
-        break;
-      }
+    /** set error state to make UI respond to empty input (color & size)*/
+    let colorIsSelected = false;
+    let sizeIsSelected = false;
+    if (!selectedColor.length) {
+      setColorErr(true);
+    } else {
+      colorIsSelected = true;
+    }
+    if (!selectedSize.length) {
+      setSizeErr(true);
+    } else {
+      sizeIsSelected = true;
     }
 
-    if (hasSameItem) {
-      dispatch(addToExisted(newItem));
-    } else {
-      dispatch(addToCart(newItem));
+    /** hasSameItem works to examine if the item already exits in cart
+     * if the item is already in the cart, instead of adding a new item, add quantity only*/
+
+    let hasSameItem = false;
+
+    //only add to cart if user select both color and size
+    if (colorIsSelected && sizeIsSelected) {
+      
+      const newItem = {
+        id: detail.id,
+        name: detail.name,
+        price: detail.price,
+        url: detail.imageUrl,
+        size: selectedSize,
+        color: selectedColor,
+      };
+
+      for (let i = 0; i < itemList.length; i++) {
+        const item = itemList[i];
+        if (
+          item.id === newItem.id &&
+          item.size === newItem.size &&
+          item.color === newItem.color
+        ) {
+          hasSameItem = true;
+          break;
+        }
+      }
+
+      if (hasSameItem) {
+        dispatch(addToExisted(newItem));
+      } else {
+        dispatch(addToCart(newItem));
+      }
     }
   };
 
@@ -208,7 +233,7 @@ export default function ProductDetails() {
                   >
                     Frame Size
                   </Typography>
-                  <FormControl sx={{ mt: 1 }} fullWidth>
+                  <FormControl sx={{ mt: 1 }} fullWidth error={sizeErr}>
                     <InputLabel id="select-size-label">
                       {" "}
                       Select Size{" "}
@@ -234,7 +259,7 @@ export default function ProductDetails() {
                     Color
                   </Typography> */}
 
-                  <FormControl sx={{ mt: 2, minWidth: 150 }}>
+                  <FormControl sx={{ mt: 2, minWidth: 150 }} error={colorErr}>
                     <FormLabel id="radio-buttons-group-label">Color</FormLabel>
 
                     <RadioGroup
@@ -260,7 +285,7 @@ export default function ProductDetails() {
                                     color: `#fff`,
                                     height: 50,
                                     width: 50,
-                                    backgroundColor: `${color}`,
+                                    backgroundColor: color,
                                   }}
                                 ></div>
                               </li>

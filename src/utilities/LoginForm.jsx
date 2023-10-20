@@ -9,7 +9,7 @@ import {
 import firebaseApp from "../service/firebaseConfig";
 import { useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { signIn } from "../store/user";
+import { userSignIn } from "../store/user";
 import { useDispatch } from "react-redux";
 
 export default function LoginForm() {
@@ -33,14 +33,16 @@ export default function LoginForm() {
         if (user) {
           // const {id, email, name} = getUserById(user.uid);
           getUserById(user.uid).then((data) => {
+            const accountInfo = data[0];
+            const id = Object.keys(accountInfo);
             const account = {
-              id: data[0].id,
-              email: data[0].email,
-              name: data[0].name,
+              id: id,
+              email: accountInfo[id].email,
+              name: accountInfo[id].name,
               createdAt: user.metadata.creationTime,
               lastSignIn: user.metadata.lastSignInTime,
             };
-            dispatch(signIn(account));
+            dispatch(userSignIn(account));
             navigate("/");
           });
         }
@@ -59,8 +61,8 @@ export default function LoginForm() {
     const result = [];
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
-      // console.log(doc.id, " => ", doc.data());
-      result.push(doc.data());
+      console.log(doc.id, " => ", doc.data());
+      result.push({[doc.id]: doc.data()});
     });
     return result;
   };

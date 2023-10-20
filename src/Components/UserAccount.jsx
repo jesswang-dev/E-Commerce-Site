@@ -1,31 +1,36 @@
 import { getAuth, signOut } from "firebase/auth";
 import firebaseApp from "../service/firebaseConfig";
-import { MenuItem } from "@mui/material";
+import { userSignOut } from "../store/user";
+// import { MenuItem } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
 
-import { useSelector } from "react-redux";
 
-const userSignOut = () => {
-  const auth = getAuth(firebaseApp);
-  signOut(auth)
-    .then(() => {
-      // Sign-out successful.
-      console.log("signout successfully");
-    })
-    .catch((error) => {
-      // An error happened.
-      console.error(error);
-    });
-
-}
 export default function UserAccount() {
   const account = useSelector((state) => state.user.account);
-  console.log(account);
+  
+  const dispatch = useDispatch();
+
+  const accountSignOut = (e) => {
+    e.preventDefault();
+    const auth = getAuth(firebaseApp);
+
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        console.log("user signed out");
+        dispatch(userSignOut());
+      })
+      .catch((error) => {
+        // An error happened.
+        console.error(error);
+      });
+  };
+
   return (
     <>
-      <div>UserAccount</div>
       <p>Welcome {account.name} !</p>
-      <MenuItem>View Profile</MenuItem>
-      <MenuItem onClick={userSignOut}>Sign Out</MenuItem>
+      <p>View Profile</p>
+      <button onClick={() => accountSignOut()}>Sign Out</button>
     </>
   );
 }

@@ -2,24 +2,26 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   account: {},
-  isRegistred: false,
   isSignnedIn: false,
-  orderList: [],
+  shoppingCart: [],
 };
 
 export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    signIn: (state, action) => {
-        console.log(action.payload);
+    userSignIn: (state, action) => {
         state.account = action.payload;
         state.isSignnedIn = true;
+    },
+    userSignOut: (state) => {
+        state.account = {};
+        state.isSignnedIn = false;
     }
   },
 });
 
-export const {signIn}= userSlice.actions;
+export const {userSignIn, userSignOut}= userSlice.actions;
 
 const userReducer = userSlice.reducer;
 export default userReducer;

@@ -14,7 +14,7 @@ function App() {
       </div>
       <ShoppingCart />
 
-      {/* <UserAccount /> */}
+      <UserAccount />
     </>
   );
 }
