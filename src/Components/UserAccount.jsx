@@ -12,6 +12,7 @@ import Logout from "@mui/icons-material/Logout";
 import Person from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /** for Avatar styling, generate background color */
 function stringToColor(string) {
@@ -53,13 +54,16 @@ export default function TestAccount() {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
   const account = useSelector((state) => state.user.account);
-
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const viewAccount = () => {
+    navigate("/account");
+  }
 
   const accountSignOut = () => {
     const auth = getAuth(firebaseApp);
@@ -91,14 +95,13 @@ export default function TestAccount() {
         transformOrigin={{ horizontal: "right", vertical: "top" }}
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
-        <MenuItem>
+        <MenuItem onClick={viewAccount}>
           <ListItemIcon>
-            <Person fontSize="small" />{" "}
+            <Person fontSize="small" />
           </ListItemIcon>
           My Account
         </MenuItem>
         <MenuItem onClick={accountSignOut}>
-          {" "}
           <ListItemIcon>
             <Logout fontSize="small" />
           </ListItemIcon>
