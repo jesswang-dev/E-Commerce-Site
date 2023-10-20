@@ -17,6 +17,7 @@ import Recomended from "./Pages/Recomended";
 import Result from "./Pages/Result";
 import SignUp from "./Pages/SignUp";
 import LogIn from "./Pages/LogIn";
+import Account from "./Pages/Account";
 import ProductDetails from "./Components/ProductDetails";
 
 /** Import stylesheets */
@@ -25,7 +26,7 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-import Account from "./Pages/Account";
+
 
 /** Import firebase config file*/
 // import "./service/firebaseConfig.js";

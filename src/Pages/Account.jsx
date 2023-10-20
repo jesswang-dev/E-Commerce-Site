@@ -1,10 +1,15 @@
+// import { useNavigate } from "react-router-dom";
 import UserProfile from "../Components/UserProfile";
+import { useSelector } from "react-redux";
+import LoginForm from "../utilities/LoginForm";
 
 export default function Account() {
-  return (
-    <>
-      <div>Account</div>
-      <UserProfile />
-    </>
-  );
+  const isSignnedIn = useSelector((state) => state.user.isSignnedIn);
+  // const navigate = useNavigate();
+
+  if (isSignnedIn) {
+    return <UserProfile />;
+  } else {
+    return <LoginForm />;
+  }
 }
