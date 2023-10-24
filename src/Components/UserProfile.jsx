@@ -1,9 +1,9 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 
 export default function UserProfile() {
   const account = useSelector((state) => state.user.account);
   const { name, email, address, createdAt } = account;
-  const dispatch = useDispatch();
+
 
   const getFormattedDate = (timeData) => {
     const dateStr = new Date(timeData).toUTCString();

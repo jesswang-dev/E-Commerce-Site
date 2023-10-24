@@ -1,10 +1,11 @@
 import SignupForm from "../utilities/SignupForm";
-
+import { Container } from "@mui/material";
 export default function SignUp() {
   return (
     <>
-      <div>SignUp</div>
-      <SignupForm />
+      <Container maxWidth="md" sx={{mt:20}}>
+        <SignupForm />
+      </Container>
     </>
   );
 }
