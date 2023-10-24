@@ -6,8 +6,10 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import App from "./App";
-import { store } from './store/store';
-import { Provider } from 'react-redux'
+import store from "./store/store";
+import { persistor } from "./store/store";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 
 import ErrorPage from "./Pages/error-page";
 import Home from "./Pages/Home";
@@ -26,7 +28,6 @@ import "@fontsource/roboto/300.css";
 import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
-
 
 /** Import firebase config file*/
 // import "./service/firebaseConfig.js";
@@ -49,8 +50,11 @@ const router = createBrowserRouter(
 
 /**The entry point for adding a Router **/
 /**Wrap <App /> with Provider */
+/**Wrap <App /> with PersistGate under Provider */
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
-    <RouterProvider router={router} />
+    <PersistGate loading={null} persistor={persistor}>
+      <RouterProvider router={router} />
+    </PersistGate>
   </Provider>
 );
