@@ -11,6 +11,7 @@ import { useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { userSignIn } from "../store/user";
 import { useDispatch } from "react-redux";
+import { Box, Divider } from "@mui/material";
 
 export default function LoginForm() {
   const passwordRef = useRef();
@@ -69,32 +70,59 @@ export default function LoginForm() {
 
   return (
     <>
-      <form action="#" id="login">
-        <label htmlFor="email">Email</label>
-        <br />
-        <input
-          type="email"
-          name="email"
-          placeholder="test@example.com"
-          ref={emailRef}
-        />
-        <br />
-        <label htmlFor="password">Password</label>
-        <br />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          ref={passwordRef}
-        />
-        <br />
-        <button onClick={handleClick}>Log In</button>
-      </form>
-
-      <div className="LoginOrSignup">
-        Do not have an account?
-        <Link to="/signup">Sign Up</Link>
-      </div>
+      <Box
+        sx={{
+          maxWidth: 800,
+          height: 350,
+          border: "1px solid #c5c5c5",
+          padding: "10px",
+        }}
+      >
+        <div className="login-content">
+          <div className="login-main">
+            <div className="title">Log in</div>
+            
+            <form action="#" id="loginForm">
+              <label htmlFor="email">Email</label>
+              <br />
+              <input
+                type="email"
+                name="email"
+                placeholder="test@example.com"
+                ref={emailRef}
+              />
+              <br />
+              <label htmlFor="password">Password</label>
+              <br />
+              <input
+                type="password"
+                name="password"
+                placeholder="password"
+                ref={passwordRef}
+              />
+              <br />
+              <button id="login"onClick={handleClick}>Log In</button>
+            </form>
+          </div>
+          <div className="login-divider">
+            <Divider orientation="vertical">Or</Divider>
+          </div>
+          <div className="login-provider"></div>
+        </div>
+      </Box>
+      <Box
+        sx={{
+          maxWidth: 800,
+          height: 60,
+          border: "1px solid #c5c5c5",
+          borderTop: "none",
+        }}
+      >
+        <div className="LoginOrSignup">
+          Do not have an account?
+          <Link to="/signup">Sign Up</Link>
+        </div>
+      </Box>
     </>
   );
 }

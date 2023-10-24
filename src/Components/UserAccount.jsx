@@ -1,10 +1,20 @@
 import { getAuth, signOut } from "firebase/auth";
 import firebaseApp from "../service/firebaseConfig";
 import { userSignOut } from "../store/user";
-import { Avatar, MenuItem } from "@mui/material";
+import {
+  Avatar,
+  IconButton,
+  Menu,
+  MenuItem,
+  ListItemIcon,
+} from "@mui/material";
+import Logout from "@mui/icons-material/Logout";
+import Person from "@mui/icons-material/Person";
 import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-
+/** for Avatar styling, generate background color */
 function stringToColor(string) {
   let hash = 0;
   let i;
@@ -34,11 +44,26 @@ function stringAvatar(name) {
   };
 }
 
+const getFirstName = (name) => {
+  return name.split(" ")[0];
+};
 
-export default function UserAccount() {
+export default function TestAccount() {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   const account = useSelector((state) => state.user.account);
-  
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const viewAccount = () => {
+    navigate("/account");
+  }
 
   const accountSignOut = () => {
     const auth = getAuth(firebaseApp);
@@ -57,9 +82,32 @@ export default function UserAccount() {
 
   return (
     <>
-      <p>Welcome {account.name} !</p>
-      <Avatar {...stringAvatar(account.name)} />
-      <button onClick={accountSignOut}>Sign Out</button>
+      <span>{getFirstName(account.name)}</span>
+      <IconButton onClick={handleClick}>
+        <Avatar {...stringAvatar(account.name)} />
+      </IconButton>
+      <Menu
+        id="account-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        transformOrigin={{ horizontal: "right", vertical: "top" }}
+        anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
+      >
+        <MenuItem onClick={viewAccount}>
+          <ListItemIcon>
+            <Person fontSize="small" />
+          </ListItemIcon>
+          My Account
+        </MenuItem>
+        <MenuItem onClick={accountSignOut}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
     </>
   );
 }

@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import firebaseApp from "../service/firebaseConfig";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { Box, Divider } from "@mui/material";
 
 export default function SignupForm() {
   const auth = getAuth(firebaseApp);
@@ -62,46 +63,79 @@ export default function SignupForm() {
 
   return (
     <>
-      <div className="errorMessage">{error.code}</div>
+      <Box
+        sx={{
+          maxWidth: 800,
+          height: 400,
+          border: "1px solid #c5c5c5",
+          padding: "10px",
+        }}
+      >
+        <div className="errorMessage">{error.code}</div>
 
-      <form action="#" id="signup" onSubmit={handleSubmit}>
-        <label htmlFor="name">Full Name</label>
-        <br />
-        <input
-          type="text"
-          name="name"
-          placeholder="John Doe"
-          onBlur={addUserName}
-          ref={nameRef}
-        />
-        <br />
-        <label htmlFor="email">Email</label>
-        <br />
-        <input
-          type="email"
-          name="email"
-          placeholder="test@example.com"
-          onBlur={addUserEmail}
-          ref={emailRef}
-        />
-        <br />
-        <label htmlFor="password">Password</label>
-        <br />
-        <input
-          type="password"
-          name="password"
-          placeholder="password"
-          onBlur={addUserPassword}
-          ref={passRef}
-        />
-        <br />
-        <input type="submit" value="Sign up" />
-      </form>
+        <div className="auth-content">
+          <div className="auth-main">
+            <div className="title">Sign up</div>
 
-      <div className="LoginOrSignup">
-        Already have an account?
-        <Link to='/login'>Log In</Link>
-      </div>
+            <form id="signupForm" onSubmit={handleSubmit}>
+              <label htmlFor="name">Full Name</label>
+              <br />
+              <input
+                type="text"
+                name="name"
+                placeholder="John Doe"
+                onBlur={addUserName}
+                ref={nameRef}
+                required
+              />
+              <br />
+              <label htmlFor="email">Email</label>
+              <br />
+              <input
+                type="email"
+                name="email"
+                placeholder="test@example.com"
+                onBlur={addUserEmail}
+                ref={emailRef}
+                required
+              />
+              <br />
+              <label htmlFor="password">Password</label>
+              <br />
+              <input
+                type="password"
+                name="password"
+                placeholder="password"
+                onBlur={addUserPassword}
+                ref={passRef}
+                required
+              />
+              <br />
+              <input id="signup" type="submit" value="Sign up" />
+            </form>
+          </div>
+          <div className="auth-divider">
+            <Divider orientation="vertical">
+              Or
+            </Divider>
+          </div>
+          <div className="auth-provider"></div>
+        </div>
+      </Box>
+
+      <Box
+        sx={{
+          maxWidth: 800,
+          height: 60,
+          border: "1px solid #c5c5c5",
+          borderTop: "none",
+        }}
+      >
+        <div className="LoginOrSignup">
+          Already have an account?
+          <Link to="/login"> Log In </Link>
+        </div>
+      </Box>
     </>
   );
 }
