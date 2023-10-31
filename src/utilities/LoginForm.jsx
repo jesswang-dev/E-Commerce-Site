@@ -1,4 +1,9 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import {
   getFirestore,
   getDocs,
@@ -11,7 +16,8 @@ import { useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { userSignIn } from "../store/user";
 import { useDispatch } from "react-redux";
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Button } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
 
 export default function LoginForm() {
   const passwordRef = useRef();
@@ -19,18 +25,19 @@ export default function LoginForm() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const handleClick = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const auth = getAuth(firebaseApp);
 
     const inputEmail = emailRef.current.value;
     const inputPassword = passwordRef.current.value;
 
+    //user sign in with email and password
     await signInWithEmailAndPassword(auth, inputEmail, inputPassword)
       .then((userCredential) => {
         //Signned in
         const user = userCredential.user;
-        console.log(user);
+        // console.log(user);
         if (user) {
           // const {id, email, name} = getUserById(user.uid);
           getUserById(user.uid).then((data) => {
@@ -54,6 +61,46 @@ export default function LoginForm() {
         console.log(errorCode, errorMessage);
       });
   };
+
+  const googleLogin = async () => {
+    const auth = getAuth(firebaseApp);
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        // console.log(token);
+
+        const { uid, email, displayName, createdAt, lastLoginAt } = user;
+
+           const account = {
+             id: uid,
+             email: email,
+             name: displayName,
+             createdAt: createdAt,
+             lastSignIn: lastLoginAt,
+           };
+           dispatch(userSignIn(account));
+           navigate("/");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.customData.email;
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+      });
+
+  }
 
   const getUserById = async (id) => {
     const db = getFirestore(firebaseApp);
@@ -81,8 +128,8 @@ export default function LoginForm() {
         <div className="login-content">
           <div className="login-main">
             <div className="title">Log in</div>
-            
-            <form action="#" id="loginForm">
+
+            <form action="#" id="loginForm" onSubmit={handleSubmit}>
               <label htmlFor="email">Email</label>
               <br />
               <input
@@ -101,13 +148,17 @@ export default function LoginForm() {
                 ref={passwordRef}
               />
               <br />
-              <button id="login"onClick={handleClick}>Log In</button>
+              <input id="login" type="submit" value="Log in" />
             </form>
           </div>
           <div className="login-divider">
             <Divider orientation="vertical">Or</Divider>
           </div>
-          <div className="login-provider"></div>
+          <div className="login-provider">
+            <Button variant="outlined" startIcon={<GoogleIcon />} onClick={googleLogin}>
+              Continue with Google
+            </Button>
+          </div>
         </div>
       </Box>
       <Box

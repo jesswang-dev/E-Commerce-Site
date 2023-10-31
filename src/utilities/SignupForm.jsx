@@ -29,11 +29,10 @@ export default function SignupForm() {
   const addUserPassword = () => {
     setPassword(passRef.current.value);
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    //user sign up
+    //user sign up with email and password
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
@@ -43,7 +42,7 @@ export default function SignupForm() {
         password: password,
         id: res.user.uid,
       };
-      console.log("userObj", userObj);
+      // console.log("userObj", userObj);
 
       // Add a new document with a generated id.
       const docRef = await addDoc(collection(db, "users"), userObj);
@@ -105,7 +104,7 @@ export default function SignupForm() {
               <input
                 type="password"
                 name="password"
-                placeholder="password"
+                placeholder="&nbsp;password"
                 onBlur={addUserPassword}
                 ref={passRef}
                 required
@@ -115,9 +114,7 @@ export default function SignupForm() {
             </form>
           </div>
           <div className="auth-divider">
-            <Divider orientation="vertical">
-              Or
-            </Divider>
+            <Divider orientation="vertical">Or</Divider>
           </div>
           <div className="auth-provider"></div>
         </div>
