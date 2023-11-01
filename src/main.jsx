@@ -9,7 +9,7 @@ import App from "./App";
 import store from "./store/store";
 import { persistor } from "./store/store";
 import { Provider } from "react-redux";
-import { PersistGate } from "redux-persist/integration/react";
+import { PersistGate } from "redux-persist/es/integration/react";
 
 import ErrorPage from "./Pages/error-page";
 import Home from "./Pages/Home";
