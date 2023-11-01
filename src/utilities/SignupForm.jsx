@@ -1,15 +1,24 @@
 import { useState, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { userSignIn } from "../store/user";
+import { useDispatch } from "react-redux";
 import firebaseApp from "../service/firebaseConfig";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
+} from "firebase/auth";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { Box, Divider } from "@mui/material";
+import { Box, Divider, Button } from "@mui/material";
+import GoogleIcon from "@mui/icons-material/Google";
 
 export default function SignupForm() {
   const auth = getAuth(firebaseApp);
   const db = getFirestore(firebaseApp);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -23,12 +32,15 @@ export default function SignupForm() {
   const addUserName = () => {
     setName(nameRef.current.value);
   };
+
   const addUserEmail = () => {
     setEmail(emailRef.current.value);
   };
+
   const addUserPassword = () => {
     setPassword(passRef.current.value);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -41,6 +53,8 @@ export default function SignupForm() {
         email: email,
         password: password,
         id: res.user.uid,
+        address: null,
+        tel: null,
       };
       // console.log("userObj", userObj);
 
@@ -60,8 +74,55 @@ export default function SignupForm() {
     }
   };
 
+  const googleLogin = async () => {
+    const auth = getAuth(firebaseApp);
+    const provider = new GoogleAuthProvider();
+
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential.accessToken;
+        // The signed-in user info.
+        const user = result.user;
+        // IdP data available using getAdditionalUserInfo(result)
+        // ...
+        console.log(`token: ${token}`);
+
+        const { uid, email, displayName, metadata } = user;
+        const account = {
+          id: uid,
+          email: email,
+          name: displayName,
+          createdAt: metadata.creationTime,
+          lastSignIn: metadata.lastSignInTime,
+        };
+
+        dispatch(userSignIn(account));
+        navigate("/");
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        // const email = error.customData.email;
+        // The AuthCredential type that was used.
+        // const credential = GoogleAuthProvider.credentialFromError(error);
+        // ...
+        setError((prev) => ({
+          ...prev,
+          code: errorCode,
+          message: errorMessage,
+        }));
+      });
+  };
+
   return (
     <>
+      <div className="errorMessage" style={{ height: 50 }}>
+        {error.code}
+      </div>
       <Box
         sx={{
           maxWidth: 800,
@@ -70,8 +131,6 @@ export default function SignupForm() {
           padding: "10px",
         }}
       >
-        <div className="errorMessage">{error.code}</div>
-
         <div className="auth-content">
           <div className="auth-main">
             <div className="title">Sign up</div>
@@ -116,7 +175,15 @@ export default function SignupForm() {
           <div className="auth-divider">
             <Divider orientation="vertical">Or</Divider>
           </div>
-          <div className="auth-provider"></div>
+          <div className="auth-provider">
+            <Button
+              variant="outlined"
+              startIcon={<GoogleIcon />}
+              onClick={googleLogin}
+            >
+              Continue with Google
+            </Button>
+          </div>
         </div>
       </Box>
 

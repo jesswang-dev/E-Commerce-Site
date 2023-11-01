@@ -17,11 +17,19 @@ export const userSlice = createSlice({
     userSignOut: (state) => {
         state.account = {};
         state.isSignnedIn = false;
+    },
+    userEditAddress: (state, action) => {
+      const source = { address: action.payload }
+      state.account = Object.assign(state.account, source);
+    },
+    userEditPhone: (state, action) => {
+      const source = { tel: action.payload };
+      state.account = Object.assign(state.account, source);
     }
   },
 });
 
-export const {userSignIn, userSignOut}= userSlice.actions;
+export const {userSignIn, userSignOut, userEditAddress, userEditPhone}= userSlice.actions;
 
 const userReducer = userSlice.reducer;
 export default userReducer;

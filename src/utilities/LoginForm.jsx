@@ -12,7 +12,7 @@ import {
   where,
 } from "firebase/firestore";
 import firebaseApp from "../service/firebaseConfig";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { userSignIn } from "../store/user";
 import { useDispatch } from "react-redux";
@@ -20,6 +20,7 @@ import { Box, Divider, Button } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
 
 export default function LoginForm() {
+  const [error, setError] = useState({});
   const passwordRef = useRef();
   const emailRef = useRef();
   const navigate = useNavigate();
@@ -47,6 +48,8 @@ export default function LoginForm() {
               id: id,
               email: accountInfo[id].email,
               name: accountInfo[id].name,
+              address: accountInfo[id].address,
+              tel: accountInfo[id].tel,
               createdAt: user.metadata.creationTime,
               lastSignIn: user.metadata.lastSignInTime,
             };
@@ -58,7 +61,12 @@ export default function LoginForm() {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        // console.log(errorCode, errorMessage);
+        setError((prev) => ({
+          ...prev,
+          code: errorCode,
+          message: errorMessage,
+        }));
       });
   };
 
@@ -75,32 +83,36 @@ export default function LoginForm() {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        // console.log(token);
+        console.log(`token: ${token}`);
 
-        const { uid, email, displayName, createdAt, lastLoginAt } = user;
+        const { uid, email, displayName, metadata } = user;
+        const account = {
+          id: uid,
+          email: email,
+          name: displayName,
+          createdAt: metadata.creationTime,
+          lastSignIn: metadata.lastSignInTime,
+        };
 
-           const account = {
-             id: uid,
-             email: email,
-             name: displayName,
-             createdAt: createdAt,
-             lastSignIn: lastLoginAt,
-           };
-           dispatch(userSignIn(account));
-           navigate("/");
+        dispatch(userSignIn(account));
+        navigate("/");
       })
       .catch((error) => {
         // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
         // The email of the user's account used.
-        const email = error.customData.email;
+        // const email = error.customData.email;
         // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error);
+        // const credential = GoogleAuthProvider.credentialFromError(error);
         // ...
+        setError((prev) => ({
+          ...prev,
+          code: errorCode,
+          message: errorMessage,
+        }));
       });
-
-  }
+  };
 
   const getUserById = async (id) => {
     const db = getFirestore(firebaseApp);
@@ -110,13 +122,16 @@ export default function LoginForm() {
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
       console.log(doc.id, " => ", doc.data());
-      result.push({[doc.id]: doc.data()});
+      result.push({ [doc.id]: doc.data() });
     });
     return result;
   };
 
   return (
     <>
+      <div className="errorMessage" style={{ height: 50 }}>
+        {error.code}
+      </div>
       <Box
         sx={{
           maxWidth: 800,
@@ -128,7 +143,6 @@ export default function LoginForm() {
         <div className="login-content">
           <div className="login-main">
             <div className="title">Log in</div>
-
             <form action="#" id="loginForm" onSubmit={handleSubmit}>
               <label htmlFor="email">Email</label>
               <br />
@@ -155,7 +169,11 @@ export default function LoginForm() {
             <Divider orientation="vertical">Or</Divider>
           </div>
           <div className="login-provider">
-            <Button variant="outlined" startIcon={<GoogleIcon />} onClick={googleLogin}>
+            <Button
+              variant="outlined"
+              startIcon={<GoogleIcon />}
+              onClick={googleLogin}
+            >
               Continue with Google
             </Button>
           </div>
