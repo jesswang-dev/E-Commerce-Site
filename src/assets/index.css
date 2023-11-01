@@ -64,6 +64,8 @@ li {
   align-items: center;
 }
 
+
+
 .auth-content {
   height: 100%;
   display: flex;
@@ -127,7 +129,7 @@ input#signup {
   width: 30%;
 }
 
-button#login {
+input#login {
   margin-top: 20px;
   width: 30%;
 }
