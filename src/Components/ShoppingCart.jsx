@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { emptyCart, displayCart } from "../store/cart";
-import CartItem from "./cartItem";
+import CartItem from "./CartItem";
 import { Button, Container } from "@mui/material";
 
 export default function ShoppingCart() {
