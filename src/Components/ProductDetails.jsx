@@ -19,8 +19,10 @@ import {
   FormControlLabel,
   Button,
   Radio,
+  ButtonBase,
 } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import CheckIcon from "@mui/icons-material/Check";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart, addToExisted } from "../store/cart";
 
@@ -37,6 +39,7 @@ export default function ProductDetails() {
   const [imageList, setImageList] = useState([]);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const [colorErr, setColorErr] = useState(false);
   const [sizeErr, setSizeErr] = useState(false);
@@ -117,7 +120,6 @@ export default function ProductDetails() {
 
     //only add to cart if user select both color and size
     if (colorIsSelected && sizeIsSelected) {
-      
       const newItem = {
         id: detail.id,
         name: detail.name,
@@ -149,168 +151,158 @@ export default function ProductDetails() {
 
   const onClickNavigate = () => {
     navigate("/shop");
-  }
+  };
+
+  const handleSwitchImage = (url) => {
+    setImageUrl(url);
+  };
 
   return (
     <>
-      <Container>
-        <Button onClick={onClickNavigate} startIcon={<ArrowBackIcon />}>
-          Back to Shop
-        </Button>
-        <Grid
-          container
-          sx={{
-            maxWidth: 1100,
-            height: 500,
-            border: "1px solid #f9f9f9",
-          }}
-          spacing={3}
-        >
-          <Grid item xs={2} sx={{ display: "flex", direction: "column" }}>
-            <ul
-              className="gallery"
-              style={{
-                width: 100,
-                height: "100%",
-                border: "1px solid #f9f9f9",
-              }}
-            >
-              {imageList.map((image) => {
-                return (
-                  <li
-                    key={`image${image.id}`}
-                    style={{
-                      width: 100,
-                      height: 100,
-                      border: "1px solid #f9f9f9",
-                    }}
-                  >
-                    <img
-                      src={image.url}
-                      alt={image.id}
-                      style={{
-                        width: "100px",
-                        height: "100px",
-                        objectFit: "contain",
-                      }}
-                    />
-                  </li>
-                );
-              })}
-            </ul>
-          </Grid>
+      <div className="product-details">
+        <Container>
+          <Button onClick={onClickNavigate} startIcon={<ArrowBackIcon />}>
+            Back to Shop
+          </Button>
+          <Grid container spacing={2}>
+            <Grid item xs={2}>
+              <ul className="gallery">
+                {imageList.map((image) => {
+                  return (
+                    <ButtonBase
+                      key={`image${image.id}`}
+                      onClick={() => handleSwitchImage(image.url)}
+                    >
+                      <li>
+                        <img src={image.url} alt={image.id} />
+                      </li>
+                    </ButtonBase>
+                  );
+                })}
+              </ul>
+            </Grid>
 
-          <Grid item xs={4}>
-            <Card
-              sx={{
-                maxWidth: "100%",
-                height: "100%",
-                backgroundColor: "#f9f9f9",
-              }}
-            >
-              <div className="product">
+            <Grid item xs={4}>
+              <div className="product-img">
                 <img
-                  src={detail.imageUrl}
+                  src={imageUrl.length ? imageUrl : detail.imageUrl}
                   alt={detail.name}
-                  style={{ width: "100%", height: "100%" }}
                 />
               </div>
-            </Card>
-          </Grid>
+            </Grid>
 
-          <Grid item xs={6}>
-            <Card sx={{ maxWidth: 700, height: "100%" }}>
-              <Box mt={3}>
-                <CardContent>
-                  <Typography variant="body2" color="text.secondary">
-                    {detail.brand}
-                  </Typography>
-                  <Typography variant="h5">{detail.name}</Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    {detail.description}
-                  </Typography>
-
-                  <Divider />
-                  <Typography
-                    sx={{ mt: 1 }}
-                    variant="subtitle1"
-                    color="text.secondary"
-                  >
-                    Frame Size
-                  </Typography>
-                  <FormControl sx={{ mt: 1 }} fullWidth error={sizeErr}>
-                    <InputLabel id="select-size-label">
-                      {" "}
-                      Select Size{" "}
-                    </InputLabel>
-                    <Select
-                      labelId="select-size-label"
-                      id="select-size"
-                      label="Lens Size"
-                      defaultValue={selectedSize}
-                      onChange={handleSelectedSize}
+            <Grid item xs={6}>
+              <Card sx={{ maxWidth: 700, height: "100%" }}>
+                <Box mt={2}>
+                  <CardContent>
+                    <Typography variant="body2" color="text.secondary">
+                      {detail.brand}
+                    </Typography>
+                    <Typography variant="h5">{detail.name}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {detail.description}
+                    </Typography>
+                    <Divider />
+                    <Typography
+                      sx={{ mt: 1 }}
+                      variant="subtitle1"
+                      color="text.secondary"
                     >
-                      {sizeList.map((size, index) => {
-                        return (
-                          <MenuItem key={`size${index}${size}`} value={size}>
-                            {`${size} mm`}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </FormControl>
+                      Frame Size
+                    </Typography>
+                    <FormControl sx={{ mt: 1 }} fullWidth error={sizeErr}>
+                      <InputLabel id="select-size-label">
+                        {" "}
+                        Select Size{" "}
+                      </InputLabel>
+                      <Select
+                        labelId="select-size-label"
+                        id="select-size"
+                        label="Lens Size"
+                        defaultValue={selectedSize}
+                        onChange={handleSelectedSize}
+                      >
+                        {sizeList.map((size, index) => {
+                          return (
+                            <MenuItem key={`size${index}${size}`} value={size}>
+                              {`${size} mm`}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </FormControl>
 
-                  {/* <Typography variant="subtitle1" color="text.secondary">
-                    Color
-                  </Typography> */}
-
-                  <FormControl sx={{ mt: 2, minWidth: 150 }} error={colorErr}>
-                    <FormLabel id="radio-buttons-group-label">Color</FormLabel>
-
-                    <RadioGroup
-                      row
-                      aria-labelledby="radio-buttons-group-label"
-                      name="radio-buttons-group"
-                      defaultValue={selectedColor}
-                      onChange={handleSelectedColor}
+                    <FormControl
+                      sx={{ mt: 2, ml: 1, minWidth: 150 }}
+                      error={colorErr}
                     >
-                      <ul>
+                      <FormLabel id="radio-buttons-group-label">
+                        Color
+                      </FormLabel>
+
+                      <RadioGroup
+                        row
+                        aria-labelledby="radio-buttons-group-label"
+                        name="radio-buttons-group"
+                        defaultValue={selectedColor}
+                        onChange={handleSelectedColor}
+                      >
                         {colorList.map((color, index) => {
                           return (
                             <>
-                              <li key={`color${index}${color}`}>
-                                <FormControlLabel
-                                  value={color}
-                                  control={<Radio />}
-                                  label={color}
-                                ></FormControlLabel>
-                                <div
-                                  className="colorBox"
-                                  style={{
-                                    color: `#fff`,
-                                    height: 50,
-                                    width: 50,
-                                    backgroundColor: color,
-                                  }}
-                                ></div>
-                              </li>
+                              <FormControlLabel
+                                key={`color-${index}`}
+                                className="custom-radios"
+                                value={color}
+                                control={
+                                  <Radio
+                                    checkedIcon={
+                                      <CheckIcon sx={{ color: "#fff" }} />
+                                    }
+                                    icon={<span></span>}
+                                    sx={{
+                                      position: "absolute",
+                                      marginBottom: 1,
+                                    }}
+                                  />
+                                }
+                                label={
+                                  <span
+                                    className="color-label"
+                                    style={{
+                                      display: "inline-block",
+                                      color: `#fff`,
+                                      height: 40,
+                                      width: 40,
+                                      borderRadius: "50%",
+                                      border: "2px solid #fff",
+                                      boxShadow:
+                                        "0 1px 3px 0 rgba(0, 0, 0, 0.3)",
+                                      backgroundColor: color,
+                                    }}
+                                  ></span>
+                                }
+                              ></FormControlLabel>
                             </>
                           );
                         })}
-                      </ul>
-                    </RadioGroup>
-                  </FormControl>
+                      </RadioGroup>
+                    </FormControl>
 
-                  <Typography variant="h5">{`$${detail.price}.00`}</Typography>
-                  <Button variant={"contained"} onClick={addItemToCart}>
-                    Add to Cart
-                  </Button>
-                </CardContent>
-              </Box>
-            </Card>
+                    <Typography
+                      variant="h5"
+                      mt={3}
+                    >{`$${detail.price}.00`}</Typography>
+                    <Button variant={"contained"} onClick={addItemToCart}>
+                      Add to Cart
+                    </Button>
+                  </CardContent>
+                </Box>
+              </Card>
+            </Grid>
           </Grid>
-        </Grid>
-      </Container>
+        </Container>
+      </div>
     </>
   );
 }

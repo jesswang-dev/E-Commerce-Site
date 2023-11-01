@@ -27,7 +27,7 @@ export default function ProductCard() {
     const querySnapshot = await getDocs(collection(db, "products"));
     querySnapshot.forEach((doc) => {
       // console.log(`${doc.id} => ${doc.data()}`);
-      console.log(doc.data());
+      // console.log(doc.data());
       const { name, brand, price, image, availableColors, sizes } = doc.data();
       const productInfo = {
         id: doc.id,
