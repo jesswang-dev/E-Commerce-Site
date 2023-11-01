@@ -1,9 +1,7 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./Components/NavBar";
 import ShoppingCart from "./Components/ShoppingCart";
-// import UserAccount from "./Components/UserAccount";
-// import TestAccount from "./Components/TestAccount";
-// import UserProfile from "./Components/UserProfile";
+
 
 function App() {
   return (
@@ -15,7 +13,6 @@ function App() {
         <Outlet />
       </div>
       <ShoppingCart />
-      {/* <UserProfile /> */}
     </>
   );
 }
