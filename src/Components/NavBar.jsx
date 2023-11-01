@@ -5,13 +5,13 @@ import Featured from "../Pages/Featured";
 import Recomended from "../Pages/Recomended";
 import SearchBar from "./SearchBar";
 import AccountButtons from "./AccountButtons";
-
 import Grid from "@mui/material/Grid";
 import { Container } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import Badge from "@mui/material/Badge";
 import { displayCart } from "../store/cart";
 import { useDispatch, useSelector } from "react-redux";
+
 
 export default function NavBar() {
   const computedClassName = ({ isActive }) => {
@@ -28,7 +28,7 @@ export default function NavBar() {
 
   return (
     <>
-      <Container maxWidth={"xl"}>
+      <Container maxWidth={0.9}>
         <Grid container height={100} alignItems="center">
           <Grid
             item

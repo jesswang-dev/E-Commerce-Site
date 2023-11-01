@@ -1,6 +1,7 @@
-import { Link, useLocation } from "react-router-dom";
-import { Container } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
+import { Typography, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 export default function Banner() {
   const location = useLocation();
@@ -31,29 +32,43 @@ export default function Banner() {
 
   const { title, style, imgURL, alt } = bannerState[route];
 
+  const navigate = useNavigate();
+  const onClickNavigate = () => {
+    navigate("/shop");
+  }
+
   return (
-    <div className="banner">
-      <Container sx={{maxWidth:1200}}>
-        <Grid container height={300} display={"flex"} justifyContent={"center"} >
-          <Grid item xs={6}>
-            <div className="text">
-              <h3>{title}</h3>
-              <p className="brief" style={{ visibility: style }}>
+    <>
+      <div className="banner">
+        <Grid container>
+          <div className="text">
+            <Typography variant="h3" gutterBottom>
+              {title}
+            </Typography>
+            <p className="brief" style={{ visibility: style }}>
+              <Typography variant="body2" gutterBottom>
                 Buying eyewear should leave you happy and good-looking, with
                 money in your pocket. Glasses, sunglasses, and contacts—we’ve
                 got your eyes covered.
-              </p>
-              <Link to="/shop"><button style={{ visibility: style }}>Shop now</button></Link>
-            </div>
-          </Grid>
+              </Typography>
+            </p>
+            
+              <Button
+                sx={{ visibility: style }}
+                variant="contained"
+                size="large"
+                endIcon={<ArrowForwardIcon />}
+                onClick={onClickNavigate}
+              >
+                Shop now
+              </Button>
+          </div>
 
-          <Grid item xs={6}>
-            <div className="pic">
-              <img src={imgURL} alt={alt} height={300}/>
-            </div>
-          </Grid>
+          <div className="pic">
+            <img src={imgURL} alt={alt} />
+          </div>
         </Grid>
-      </Container>
-    </div>
+      </div>
+    </>
   );
 }

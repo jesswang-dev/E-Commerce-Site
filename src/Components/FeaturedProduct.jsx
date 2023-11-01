@@ -8,11 +8,14 @@ import {
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Typography from "@mui/material/Typography";
-import { CardActionArea, Grid, Container } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  CardActionArea,
+  Grid,
+  Typography,
+} from "@mui/material";
 
 export default function FeaturedProduct() {
   const db = getFirestore(firebaseApp);
@@ -53,38 +56,48 @@ export default function FeaturedProduct() {
 
   return (
     <>
-      <Container>
-        <Grid sx={{ maxWidth: 1200 }} container spacing={2}>
-          <Grid item xs={12}>
-            <Grid container justifyContent="flex start" spacing={2}>
-              {productList.map((item, index) => {
-                return (
-                  <li key={`product${item.id}`} onClick={() => navigateToDetails(index)}>
-                    <Card sx={{ maxWidth: 300 }}>
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          height="140"
-                          image={item.image}
-                          alt={item.name}
-                        />
-                        <CardContent>
-                          <Typography gutterBottom variant="h6" component="div">
-                            {item.name}
-                          </Typography>
-                          <Typography variant="body2" color="text.secondary">
-                            {item.brand}
-                          </Typography>
-                        </CardContent>
-                      </CardActionArea>
-                    </Card>
-                  </li>
-                );
-              })}
-            </Grid>
+      <div className="featured-product">
+        <div className="title">
+          <Typography variant="h5" gutterBottom>
+            Featured Products
+          </Typography>
+        </div>
+
+        <div className="product-content">
+          <Grid container justifyContent="flex-start">
+            {productList.map((item, index) => {
+              return (
+                <Grid
+                  item
+                  xs={3}
+                  key={`product${item.id}`}
+                  onClick={() => navigateToDetails(index)}
+                  mb={3}
+                >
+                  <Card sx={{ maxWidth: 320 }}>
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        height="150"
+                        image={item.image}
+                        alt={item.name}
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h6" component="div">
+                          {item.name}
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                          {item.brand}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              );
+            })}
           </Grid>
-        </Grid>
-      </Container>
+        </div>
+      </div>
     </>
   );
 }

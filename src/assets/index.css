@@ -3,7 +3,7 @@
   margin: 0;
   font-family: "Roboto";
   box-sizing: border-box;
-  color: #1a1a1a;
+  /* color: #1a1a1a; */
 }
 
 a {
@@ -15,11 +15,15 @@ li {
 }
 
 #nav {
-  background-color: #f9f9f9;
+  width: 100vw;
 }
 
 #nav a.active_ {
-  font-weight: 600;
+  font-weight: 500;
+}
+
+#page {
+  width: 100vw;
 }
 
 #cart.inactive {
@@ -63,8 +67,6 @@ li {
   justify-content: space-between;
   align-items: center;
 }
-
-
 
 .auth-content {
   height: 100%;
@@ -167,4 +169,73 @@ input#login {
   padding: 10px;
   border: 1px solid #e1e1e1;
   margin-left: 20px;
+}
+
+/* Banner Component styling*/
+.banner {
+  width: 90%;
+  height: 400px;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+}
+
+.banner .MuiGrid-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.banner .text {
+  width: 50%;
+  padding: 50px 100px 50px 50px;
+}
+
+.banner .text button {
+  margin-top: 10px;
+}
+
+.banner .pic {
+  width: 50%;
+  height: 100%;
+}
+.banner .pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* FeaturedProduct Component styling*/
+
+.featured-product {
+  width: 90%;
+  height: 700px;
+  margin: 0 auto;
+}
+
+.featured-product .title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.featured-product .product-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.recommended-product {
+  width: 90%;
+  height: 700px;
+  margin: 0 auto;
+}
+
+.recommended-product .title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.recommended-product .product-content img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }

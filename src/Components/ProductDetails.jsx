@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDoc, getFirestore, doc } from "firebase/firestore";
 import firebaseApp from "../service/firebaseConfig";
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Box,
   Card,
@@ -28,6 +28,8 @@ export default function ProductDetails() {
   const db = getFirestore(firebaseApp);
   const params = useParams();
   const { productId } = params;
+
+  const navigate = useNavigate();
 
   const [detail, setDetail] = useState({});
   const [sizeList, setSizeList] = useState([]);
@@ -145,13 +147,16 @@ export default function ProductDetails() {
     }
   };
 
+  const onClickNavigate = () => {
+    navigate("/shop");
+  }
+
   return (
     <>
       <Container>
-        <Link to={"/shop"}>
-          <ArrowBackIcon />
+        <Button onClick={onClickNavigate} startIcon={<ArrowBackIcon />}>
           Back to Shop
-        </Link>
+        </Button>
         <Grid
           container
           sx={{
