@@ -38,7 +38,7 @@ export default function CartItem(props) {
     <>
       <Paper
         elevation={1}
-        sx={{ margin: "auto", maxWidth: 550, height: 110, flexGrow: 1 }}
+        sx={{ margin: "auto", maxWidth: 600, height: 110, flexGrow: 1 }}
       >
         <Grid container columns={16} justifyContent="center" alignItems="center">
           <Grid item xs={1}>
@@ -74,7 +74,7 @@ export default function CartItem(props) {
           <Grid item xs={8} justifySelf="center">
             <div className="info">
               <p className="name">{name}</p>
-              <Stack direction="row">
+              <Stack direction="row" mt={1}>
                 <Item>
                   Quantity <br />
                   {itemQuantity[key]}

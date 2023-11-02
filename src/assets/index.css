@@ -39,6 +39,12 @@ li {
   width: 100vw;
 }
 
+/*ShoppingCart Component styling*/
+
+#cart {
+  transition: all 0.5s ease;
+}
+
 #cart.inactive {
   position: fixed;
   top: 0;
@@ -81,6 +87,7 @@ li {
   align-items: center;
 }
 
+/*LoginForm and SignupForm styling*/
 .auth-content {
   height: 100%;
   display: flex;
