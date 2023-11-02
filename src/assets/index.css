@@ -89,92 +89,47 @@ li {
 }
 
 /*LoginForm and SignupForm styling*/
-.auth-content {
+
+.auth-content,.login-content {
   height: 100%;
   display: flex;
   align-items: center;
   padding: 20px;
 }
 
-.login-content {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding: 20px;
-}
-
-.auth-main {
+.auth-main,.login-main {
   width: 40%;
   height: 100%;
 }
 
-.login-main {
-  width: 40%;
-  height: 100%;
-}
-
-.auth-main .title {
+.auth-main .title,.login-main .title {
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-.login-main .title {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.auth-main label {
+.auth-main label,.login-main label {
   display: inline-block;
   font-size: 12px;
   color: gray;
   margin-bottom: 12px;
 }
 
-.login-main label {
-  display: inline-block;
-  font-size: 12px;
-  color: gray;
-  margin-bottom: 12px;
-}
-
-.auth-main input {
+.auth-main input,.login-main input {
   width: 100%;
   height: 35px;
 }
 
-.login-main input {
-  width: 100%;
-  height: 35px;
-}
-
-input#signup {
+input#signup,input#login {
   margin-top: 20px;
   width: 30%;
 }
 
-input#login {
-  margin-top: 20px;
-  width: 30%;
-}
-
-.auth-divider {
+.auth-divider,.login-divider {
   width: 20%;
   height: 100%;
 }
 
-.login-divider {
-  width: 20%;
-  height: 100%;
-}
-
-.auth-provider {
-  display: flex;
-  width: 40%;
-  height: 100%;
-  align-items: center;
-}
-
-.login-provider {
+.auth-provider,.login-provider {
   display: flex;
   width: 40%;
   height: 100%;
@@ -334,4 +289,12 @@ ul.gallery li img {
   width: 100%;
   height: 50px;
   text-align: center;
+}
+
+.order-history,.wish-list {
+  width: 100%;
+  height: 580px;
+  background-color: #f9f9f9;
+  text-align: center;
+  line-height: 550px;
 }
