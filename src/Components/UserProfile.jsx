@@ -108,7 +108,7 @@ export default function UserProfile() {
       <Box
         sx={{
           maxWidth: 700,
-          height: 600,
+          height: 700,
           border: "1px solid #c5c5c5",
           padding: "10px",
         }}
@@ -124,29 +124,31 @@ export default function UserProfile() {
             <Tab value="2" label="Order History" />
             <Tab value="3" label="Wish List" />
           </TabList>
-          <Box sx={{ width: "100%", height: 500, border: "1px solid #c5c5c5" }}>
+          <Box sx={{ width: "100%" }}>
             <TabPanel value="1">
-              <Card sx={{ maxWidth: "100%" }}>
+              <Card sx={{ maxWidth: "100%", height: 600 }}>
                 <CardMedia
                   component="img"
                   height="120"
-                  image="src/assets/images/account-default-bkg.jpg"
+                  image="/account-default-bkg.jpg"
                   alt="default background picture"
                 />
-                <Container
-                  sx={{
-                    width: 600,
-                    display: "flex",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Avatar {...stringAvatar(name)} />
-                  <Button variant="contained" onClick={onClickEdit}>
-                    Edit Profile
-                  </Button>
-                </Container>
+                <div className="profileHeader">
+                  <Container
+                    sx={{
+                      width: 600,
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <Avatar {...stringAvatar(name)} />
+                    <Button variant="contained" onClick={onClickEdit}>
+                      Edit Profile
+                    </Button>
+                  </Container>
+                </div>
 
-                <CardContent>
+                <CardContent sx={{ padding: 5 }}>
                   <Typography variant="h6" component="div">
                     {name}
                   </Typography>
@@ -176,6 +178,7 @@ export default function UserProfile() {
                     size="small"
                     onChange={onChangeNewAddress}
                     disabled={onEdit ? false : true}
+                    sx={{ width: "50%" }}
                   />
 
                   <Typography variant="subtitle1" component="div">
@@ -183,15 +186,14 @@ export default function UserProfile() {
                   </Typography>
                   <TextField
                     hiddenLabel
-                    defaultValue={
-                      newTel ? newTel : "No phone number recorded"
-                    }
+                    defaultValue={newTel ? newTel : "No phone number recorded"}
                     id="profile-tel"
                     variant="standard"
                     type="tel"
                     size="small"
                     onChange={onChangeNewTel}
                     disabled={onEdit ? false : true}
+                    sx={{ width: "50%" }}
                   />
                   <Typography variant="subtitle1" component="div">
                     Date joined
@@ -205,13 +207,15 @@ export default function UserProfile() {
                     disabled={true}
                   />
                 </CardContent>
-                {onEdit ? (
-                  <Button onClick={onClickSaveChanges}>Save Change</Button>
-                ) : null}
+                <div className="save-changes">
+                  {onEdit ? (
+                    <Button variant="contained" onClick={onClickSaveChanges}>Save Changes</Button>
+                  ) : null}
+                </div>
               </Card>
             </TabPanel>
-            <TabPanel value="2"> No History Data </TabPanel>
-            <TabPanel value="3"> No History Data </TabPanel>
+            <TabPanel value="2"> No Data </TabPanel>
+            <TabPanel value="3"> No Data </TabPanel>
           </Box>
         </TabContext>
       </Box>
