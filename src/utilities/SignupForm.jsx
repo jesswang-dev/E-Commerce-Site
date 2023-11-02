@@ -163,7 +163,7 @@ export default function SignupForm() {
               <input
                 type="password"
                 name="password"
-                placeholder="&nbsp;password"
+                placeholder="password"
                 onBlur={addUserPassword}
                 ref={passRef}
                 required
