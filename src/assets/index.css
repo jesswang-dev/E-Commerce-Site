@@ -195,6 +195,15 @@ input#login {
   margin-left: 20px;
 }
 
+.errorMessage {
+  height: 50px;
+  max-width: 800px;
+  background-color: #ffcdd2;
+  color: #c62828;
+  text-align: center;
+  line-height: 50px;
+}
+
 /* Banner Component styling*/
 .banner {
   width: 90%;

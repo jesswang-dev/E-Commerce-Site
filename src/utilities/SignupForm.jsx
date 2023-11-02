@@ -120,9 +120,12 @@ export default function SignupForm() {
 
   return (
     <>
-      <div className="errorMessage" style={{ height: 50 }}>
-        {error.code}
-      </div>
+      {error.code ? (
+        <div className="errorMessage">Signup Message: {error.code}</div>
+      ) : (
+        <div></div>
+      )}
+
       <Box
         sx={{
           maxWidth: 800,
