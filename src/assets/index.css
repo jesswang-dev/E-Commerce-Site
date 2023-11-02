@@ -3,10 +3,10 @@
   margin: 0;
   font-family: "Roboto";
   box-sizing: border-box;
-  /* color: #1a1a1a; */
 }
 
 a {
+  color: #1a1a1a;
   text-decoration: none;
 }
 
@@ -30,8 +30,20 @@ li {
   text-decoration: underline;
 }
 
+.sign-up-in {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
 #page {
   width: 100vw;
+}
+
+/*ShoppingCart Component styling*/
+
+#cart {
+  transition: all 0.5s ease;
 }
 
 #cart.inactive {
@@ -76,92 +88,52 @@ li {
   align-items: center;
 }
 
-.auth-content {
+/*LoginForm and SignupForm styling*/
+
+.auth-content,.login-content {
   height: 100%;
   display: flex;
   align-items: center;
   padding: 20px;
 }
 
-.login-content {
+.auth-main,.login-main {
+  width: 40%;
   height: 100%;
+}
+
+.auth-main .title,.login-main .title {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.auth-main label,.login-main label {
+  display: inline-block;
+  font-size: 12px;
+  color: gray;
+  margin-bottom: 12px;
+}
+
+.auth-main input,.login-main input {
+  width: 100%;
+  height: 35px;
+}
+
+input#signup,input#login {
+  margin-top: 20px;
+  width: 30%;
+}
+
+.auth-divider,.login-divider {
+  width: 20%;
+  height: 100%;
+}
+
+.auth-provider,.login-provider {
   display: flex;
+  width: 40%;
+  height: 100%;
   align-items: center;
-  padding: 20px;
-}
-
-.auth-main {
-  width: 40%;
-  height: 100%;
-}
-
-.login-main {
-  width: 40%;
-  height: 100%;
-}
-
-.auth-main .title {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.login-main .title {
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-.auth-main label {
-  display: inline-block;
-  font-size: 12px;
-  color: gray;
-  margin-bottom: 12px;
-}
-
-.login-main label {
-  display: inline-block;
-  font-size: 12px;
-  color: gray;
-  margin-bottom: 12px;
-}
-
-.auth-main input {
-  width: 100%;
-  height: 35px;
-}
-
-.login-main input {
-  width: 100%;
-  height: 35px;
-}
-
-input#signup {
-  margin-top: 20px;
-  width: 30%;
-}
-
-input#login {
-  margin-top: 20px;
-  width: 30%;
-}
-
-.auth-divider {
-  width: 20%;
-  height: 100%;
-}
-
-.login-divider {
-  width: 20%;
-  height: 100%;
-}
-
-.auth-provider {
-  width: 40%;
-  height: 100%;
-}
-
-.login-provider {
-  width: 40%;
-  height: 100%;
 }
 
 .LoginOrSignup {
@@ -177,6 +149,15 @@ input#login {
   padding: 10px;
   border: 1px solid #e1e1e1;
   margin-left: 20px;
+}
+
+.errorMessage {
+  height: 50px;
+  max-width: 800px;
+  background-color: #ffcdd2;
+  color: #c62828;
+  text-align: center;
+  line-height: 50px;
 }
 
 /* Banner Component styling*/
@@ -296,4 +277,24 @@ ul.gallery li img {
 
 .custom-radios {
   display: inline-block;
+}
+
+/*UserProfile styling*/
+
+.profileHeader {
+  transform: translateY(-50%);
+}
+
+.save-changes {
+  width: 100%;
+  height: 50px;
+  text-align: center;
+}
+
+.order-history,.wish-list {
+  width: 100%;
+  height: 580px;
+  background-color: #f9f9f9;
+  text-align: center;
+  line-height: 550px;
 }

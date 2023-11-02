@@ -29,16 +29,16 @@ export default function ShoppingCart() {
               <Button
                 variant="outlined"
                 size="small"
-                onClick={() => dispatch(displayCart(false))}
-              >
-                Close
-              </Button>
-              <Button
-                variant="outlined"
-                size="small"
                 onClick={() => dispatch(emptyCart())}
               >
                 Empty Cart
+              </Button>
+
+              <Button
+                size="small"
+                onClick={() => dispatch(displayCart(false))}
+              >
+                Close
               </Button>
             </div>
           </div>
