@@ -1,4 +1,4 @@
-import LoginForm from "../utilities/LoginForm";
+import LoginForm from "../Components/LoginForm";
 import { Container } from "@mui/material";
 export default function LogIn() {
   return (

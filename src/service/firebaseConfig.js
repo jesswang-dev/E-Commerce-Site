@@ -2,7 +2,10 @@
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-
+import {
+  initializeAppCheck,
+  ReCaptchaEnterpriseProvider,
+} from "firebase/app-check";
 
 
 // Your web app's Firebase configuration
@@ -24,8 +27,13 @@ const firebaseConfig = {
 // Initialize Firebase
  const firebaseApp = initializeApp(firebaseConfig);
 
+// Create a ReCaptchaEnterpriseProvider instance using your reCAPTCHA Enterprise
+// site key and pass it to initializeAppCheck().
+const appCheck = initializeAppCheck(firebaseApp, {
+  provider: new ReCaptchaEnterpriseProvider("6Lf8O-0oAAAAAKtO1cpPSJ3bFL7HihdKL0Qvq7TA"),
+  isTokenAutoRefreshEnabled: true // Set to true to allow auto-refresh.
+});
 
-
-console.log('Hello there, Firestore!')
+// console.log('Hello there, Firestore!')
 
 export default firebaseApp;

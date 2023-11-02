@@ -1,7 +1,7 @@
 // import { useNavigate } from "react-router-dom";
 import UserProfile from "../Components/UserProfile";
 import { useSelector } from "react-redux";
-import LoginForm from "../utilities/LoginForm";
+import LoginForm from "../Components/LoginForm";
 import { Container } from "@mui/material";
 
 export default function Account() {

@@ -220,10 +220,10 @@ export default function UserProfile() {
               </div>
             </TabPanel>
             <TabPanel value="2">
-              <div className="order-history">No Data History :(</div>
+              <div className="order-history">No Data History :&#40;</div>
             </TabPanel>
             <TabPanel value="3">
-              <div className="wish-list"> No Data History :( </div>
+              <div className="wish-list"> No Data History :&#40;</div>
             </TabPanel>
           </Box>
         </TabContext>
