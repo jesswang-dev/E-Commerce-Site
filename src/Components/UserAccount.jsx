@@ -36,12 +36,21 @@ function stringToColor(string) {
 }
 
 function stringAvatar(name) {
-  return {
-    sx: {
-      bgcolor: stringToColor(name),
-    },
-    children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
-  };
+  if (name.includes(" ")) {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name.split(" ")[0][0]}${name.split(" ")[1][0]}`,
+    };
+  } else {
+    return {
+      sx: {
+        bgcolor: stringToColor(name),
+      },
+      children: `${name[0].toUpperCase()}`,
+    };
+  }
 }
 
 const getFirstName = (name) => {
@@ -63,7 +72,7 @@ export default function TestAccount() {
 
   const viewAccount = () => {
     navigate("/account");
-  }
+  };
 
   const accountSignOut = () => {
     const auth = getAuth(firebaseApp);
