@@ -64,17 +64,16 @@ export default function FeaturedProduct() {
         </div>
 
         <div className="product-content">
-          <Grid container justifyContent="flex-start">
+          <Grid container justifyContent="flex-start" spacing={2}>
             {productList.map((item, index) => {
               return (
                 <Grid
                   item
-                  xs={3}
-                  key={`product${item.id}`}
+                  key={`product-feat-${index}`}
                   onClick={() => navigateToDetails(index)}
                   mb={3}
                 >
-                  <Card sx={{ maxWidth: 320 }}>
+                  <Card sx={{ maxWidth: 300 }}>
                     <CardActionArea>
                       <CardMedia
                         component="img"

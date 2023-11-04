@@ -30,6 +30,10 @@ li {
   text-decoration: underline;
 }
 
+.nav-link a {
+  margin-right: 30px;
+}
+
 .sign-up-in {
   display: flex;
   align-items: center;
@@ -64,6 +68,66 @@ li {
   z-index: 99;
 }
 
+@media screen and (max-width: 1150px) {
+  #cart.inactive {
+    right: -50vw;
+    width: 50vw;
+  }
+  #cart.active {
+    width: 50vw;
+  }
+}
+
+@media screen and (max-width: 1050px) {
+  #cart.inactive {
+    right: -60vw;
+    width: 60vw;
+  }
+  #cart.active {
+    width: 60vw;
+  }
+}
+
+@media screen and (max-width: 870px) {
+  #cart.inactive {
+    right: -70vw;
+    width: 70vw;
+  }
+  #cart.active {
+    width: 70vw;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #cart.inactive {
+    right: -80vw;
+    width: 80vw;
+  }
+  #cart.active {
+    width: 80vw;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  #cart.inactive {
+    right: -90vw;
+    width: 90vw;
+  }
+  #cart.active {
+    width: 90vw;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  #cart.inactive {
+    right: -100vw;
+    width: 100vw;
+  }
+  #cart.active {
+    width: 100vw;
+  }
+}
+
 #cart .MuiContainer-root {
   height: 100%;
   display: grid;
@@ -90,46 +154,54 @@ li {
 
 /*LoginForm and SignupForm styling*/
 
-.auth-content,.login-content {
+.auth-content,
+.login-content {
   height: 100%;
   display: flex;
   align-items: center;
   padding: 20px;
 }
 
-.auth-main,.login-main {
+.auth-main,
+.login-main {
   width: 40%;
   height: 100%;
 }
 
-.auth-main .title,.login-main .title {
+.auth-main .title,
+.login-main .title {
   margin-top: 20px;
   margin-bottom: 20px;
 }
 
-.auth-main label,.login-main label {
+.auth-main label,
+.login-main label {
   display: inline-block;
   font-size: 12px;
   color: gray;
   margin-bottom: 12px;
 }
 
-.auth-main input,.login-main input {
+.auth-main input,
+.login-main input {
   width: 100%;
   height: 35px;
 }
 
-input#signup,input#login {
+input#signup,
+input#login {
   margin-top: 20px;
   width: 30%;
 }
 
-.auth-divider,.login-divider {
+.auth-divider,
+.login-divider {
   width: 20%;
   height: 100%;
 }
 
-.auth-provider,.login-provider {
+.auth-provider,
+.login-provider {
   display: flex;
   width: 40%;
   height: 100%;
@@ -161,9 +233,10 @@ input#signup,input#login {
 }
 
 /* Banner Component styling*/
+
 .banner {
   width: 90%;
-  height: 400px;
+  height: 420px;
   margin: 0 auto;
   background-color: #f9f9f9;
 }
@@ -184,7 +257,8 @@ input#signup,input#login {
 }
 
 .banner .pic {
-  width: 50%;
+  display: inline-block;
+  max-width: 50%;
   height: 100%;
 }
 .banner .pic img {
@@ -193,12 +267,30 @@ input#signup,input#login {
   object-fit: cover;
 }
 
-/* FeaturedProduct Component styling*/
+@media screen and (max-width: 900px) {
+  .banner {
+    width: 80%;
+    height: 420px;
+  }
+  .banner .text {
+    width: 100%;
+    padding: 50px;
+  }
+  .banner .pic {
+    display: none;
+  }
+}
 
+/* FeaturedProduct Component styling*/
 .featured-product {
   width: 90%;
-  height: 700px;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 900px) {
+  .featured-product {
+    width: 80%;
+  }
 }
 
 .featured-product .title {
@@ -212,10 +304,17 @@ input#signup,input#login {
   object-fit: contain;
 }
 
+/* RecommendedProduct Component styling*/
+
 .recommended-product {
   width: 90%;
-  height: 700px;
   margin: 0 auto;
+}
+
+@media screen and (max-width: 900px) {
+  .recommended-product {
+    width: 80%;
+  }
 }
 
 .recommended-product .title {
@@ -291,7 +390,8 @@ ul.gallery li img {
   text-align: center;
 }
 
-.order-history,.wish-list {
+.order-history,
+.wish-list {
   width: 100%;
   height: 580px;
   background-color: #f9f9f9;

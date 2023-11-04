@@ -164,8 +164,8 @@ export default function ProductDetails() {
           <Button onClick={onClickNavigate} startIcon={<ArrowBackIcon />}>
             Back to Shop
           </Button>
-          <Grid container spacing={2}>
-            <Grid item xs={2}>
+          <Grid container spacing={2} >
+            <Grid item md={2} sm={2}>
               <ul className="gallery">
                 {imageList.map((image) => {
                   return (
@@ -182,7 +182,7 @@ export default function ProductDetails() {
               </ul>
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item md={4} sm={6}>
               <div className="product-img">
                 <img
                   src={imageUrl.length ? imageUrl : detail.imageUrl}
@@ -191,7 +191,7 @@ export default function ProductDetails() {
               </div>
             </Grid>
 
-            <Grid item xs={6}>
+            <Grid item md={6} sm={12}>
               <Card sx={{ maxWidth: 700, height: "100%" }}>
                 <Box mt={2}>
                   <CardContent>

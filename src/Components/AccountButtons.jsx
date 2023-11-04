@@ -28,10 +28,14 @@ export default function AccountButtons() {
       return (
         <>
           <Link to="/signup" element={<SignUp />}>
-            <Button variant="contained">Sign Up</Button>
+            <Button variant="contained" size="small">
+              Sign Up
+            </Button>
           </Link>
           <Link to="/login" element={<LogIn />}>
-            <Button variant="outlined">Log In</Button>
+            <Button variant="outlined" size="small">
+              Log In
+            </Button>
           </Link>
         </>
       );
