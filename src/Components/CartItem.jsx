@@ -7,7 +7,6 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import CloseIcon from "@mui/icons-material/Close";
 
 const Item = styled(Card)(({ theme }) => ({
-  // backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(2),
   textAlign: "center",
@@ -17,7 +16,7 @@ const Item = styled(Card)(({ theme }) => ({
 export default function CartItem(props) {
   // eslint-disable-next-line react/prop-types
   const { id, name, url, size, color, price } = props.item;
-  const index = props.index;
+  const { index }  = props;
   const itemQuantity = useSelector((state) => state.cart.itemQuantity);
   const itemSubtotal = useSelector((state) => state.cart.itemSubtotal);
 
@@ -37,22 +36,29 @@ export default function CartItem(props) {
   return (
     <>
       <Paper
+      variant="outlined"
         elevation={1}
-        sx={{ margin: "auto", maxWidth: 600, height: 110, flexGrow: 1 }}
+        sx={{ margin: "auto", width: "100%", height: 110, flexGrow: 1 }}
       >
-        <Grid container columns={16} justifyContent="center" alignItems="center">
+        <Grid
+          container
+          columns={16}
+          justifyContent="center"
+          alignItems="center"
+          spacing={2}
+        >
           <Grid item xs={1}>
             <div className="action">
               <ButtonBase
                 id="increment"
-                sx={{ width: 35, height: 50}}
+                sx={{ width: 35, height: 55 }}
                 onClick={() => dispatch(incrementItem(getItemPayload()))}
               >
                 <AddIcon fontSize="18px" />
               </ButtonBase>
               <ButtonBase
                 id="decrement"
-                sx={{ width: 35, height: 50}}
+                sx={{ width: 35, height: 50 }}
                 disabled={itemQuantity[key] <= 1 ? true : false}
                 onClick={() => dispatch(decrementItem(getItemPayload()))}
               >
@@ -66,24 +72,24 @@ export default function CartItem(props) {
               <img
                 src={url}
                 alt={name}
-                style={{ width: 90, height: 100, objectFit: "contain" }}
+                style={{ maxWidth: 90, height: 100, objectFit: "contain" }}
               />
             </div>
           </Grid>
 
-          <Grid item xs={8} justifySelf="center">
+          <Grid item xs={7} justifySelf="center">
             <div className="info">
               <p className="name">{name}</p>
               <Stack direction="row" mt={1}>
-                <Item>
+                <Item variant="outlined">
                   Quantity <br />
                   {itemQuantity[key]}
                 </Item>
-                <Item>
+                <Item variant="outlined">
                   Size <br />
                   {size}
                 </Item>
-                <Item>
+                <Item variant="outlined">
                   Color <br />
                   <span
                     style={{
@@ -105,7 +111,7 @@ export default function CartItem(props) {
             </div>
           </Grid>
 
-          <Grid item xs={1}>
+          <Grid item xs={2}>
             <div className="deleteItem">
               <ButtonBase
                 onClick={() => dispatch(deleteItem(getDeleteItemPayload()))}

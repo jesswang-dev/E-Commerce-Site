@@ -5,7 +5,8 @@ import Featured from "../Pages/Featured";
 import Recomended from "../Pages/Recomended";
 import SearchBar from "./SearchBar";
 import AccountButtons from "./AccountButtons";
-import { Grid, Badge, IconButton } from "@mui/material";
+import NavLinkMenu from "./NavLinkMenu";
+import { Grid, Badge, IconButton, useMediaQuery } from "@mui/material";
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined";
 import { displayCart } from "../store/cart";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,12 +24,18 @@ export default function NavBar() {
 
   const itemAmount = useSelector((state) => state.cart.amount);
 
+  //responsive, while min-width is under 900px
+  const matches = useMediaQuery('(min-width:900px)');
+
+
   return (
     <>
       <Grid container height={100} alignItems="center">
         <Grid
           item
-          xs={5}
+          md={6}
+          sm={4}
+          xs={4}
           display="flex"
           justifyContent="space-evenly"
           alignItems="center"
@@ -36,31 +43,44 @@ export default function NavBar() {
           <NavLink to="/" element={<Home />}>
             <img src="/logo.png" alt="Logo" height="50" />
           </NavLink>
-          <NavLink to="/" element={<Home />} className={computedClassName}>
-            Home
-          </NavLink>
-          <NavLink to="/shop" element={<Shop />} className={computedClassName}>
-            Shop
-          </NavLink>
-          <NavLink
-            to="/featured"
-            element={<Featured />}
-            className={computedClassName}
-          >
-            Featured
-          </NavLink>
-          <NavLink
-            to="/recommended"
-            element={<Recomended />}
-            className={computedClassName}
-          >
-            Recommended
-          </NavLink>
+
+          {matches ? (
+            <div className="nav-link">
+              <NavLink to="/" element={<Home />} className={computedClassName}>
+                Home
+              </NavLink>
+              <NavLink
+                to="/shop"
+                element={<Shop />}
+                className={computedClassName}
+              >
+                Shop
+              </NavLink>
+              <NavLink
+                to="/featured"
+                element={<Featured />}
+                className={computedClassName}
+              >
+                Featured
+              </NavLink>
+              <NavLink
+                to="/recommended"
+                element={<Recomended />}
+                className={computedClassName}
+              >
+                Recommended
+              </NavLink>
+            </div>
+          ) : (
+            <NavLinkMenu />
+          )}
         </Grid>
 
         <Grid
           item
-          xs={5}
+          md={4}
+          sm={4}
+          xs={4}
           display="flex"
           justifyContent="center"
           alignItems="center"
@@ -73,7 +93,15 @@ export default function NavBar() {
           </IconButton>
         </Grid>
 
-        <Grid item xs={2}>
+        <Grid
+          item
+          md={2}
+          sm={4}
+          xs={4}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <div className="sign-up-in">
             <AccountButtons />
           </div>

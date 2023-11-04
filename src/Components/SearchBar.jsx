@@ -35,7 +35,7 @@ export default function SearchBar() {
     <>
       <form onSubmit={submitHandler}>
         <OutlinedInput
-          id="outlined-adornment-amount"
+          id="search-input"
           startAdornment={
             <InputAdornment position="start">
               <SearchIcon />

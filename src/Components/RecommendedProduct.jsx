@@ -61,18 +61,17 @@ export default function RecommendedProduct() {
         </div>
 
         <div className="product-content">
-          <Grid container justifyContent="flex start">
+          <Grid container justifyContent="flex-start" spacing={2}>
             {productList.map((item, index) => {
               return (
                 <Grid item
-                xs={3}
-                  key={item.id}
+                  key={`product-reco-${index}`}
                   onClick={() => {
                     navigateToDetails(index);
                   }}
                   mb={3}
                 >
-                  <Card sx={{ maxWidth: 320 }}>
+                  <Card sx={{ maxWidth: 300 }}>
                     <CardActionArea>
                       <CardMedia
                         component="img"
